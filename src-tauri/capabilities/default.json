@@ -1,0 +1,7 @@
+{
+  "$schema": "../gen/schemas/desktop-schema.json",
+  "identifier": "default",
+  "description": "The window loads the web app from the local server and gets no Tauri APIs.",
+  "windows": ["main"],
+  "permissions": []
+}

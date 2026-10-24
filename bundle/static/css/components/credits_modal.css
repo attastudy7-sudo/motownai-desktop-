@@ -1,0 +1,178 @@
+/* credits_modal.css — Credits exhausted bottom-sheet
+   Mirrors the quota modal's calm bottom-sheet language (.qqm). */
+.cqm {
+  position: fixed;
+  inset: 0;
+  z-index: calc(var(--z-overlay, 2147483000) + 1);
+  display: none;
+  align-items: flex-end;
+  justify-content: center;
+}
+.cqm.cqm--open {
+  display: flex;
+}
+.cqm-bg {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.42);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+}
+.cqm-sheet {
+  position: relative;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg) var(--radius-lg) 0 0;
+  padding: var(--spacing-lg);
+  padding-top: var(--spacing-md);
+  padding-bottom: calc(var(--spacing-lg) + var(--safe-bottom));
+  width: 100%;
+  max-width: 480px;
+  text-align: center;
+}
+.cqm.cqm--open .cqm-sheet {
+  animation: cqmSheetUp 0.28s cubic-bezier(0.16, 1, 0.3, 1);
+}
+@keyframes cqmSheetUp {
+  from { transform: translateY(24px); opacity: 0; }
+  to   { transform: translateY(0);    opacity: 1; }
+}
+.cqm-handle {
+  width: 40px;
+  height: 4px;
+  background: var(--border);
+  border-radius: var(--radius-pill);
+  margin: 0 auto var(--spacing-md);
+}
+.cqm-close {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  background: transparent;
+  color: var(--text-muted);
+  cursor: pointer;
+  border-radius: var(--radius-sm);
+  transition: background var(--transition-fast), color var(--transition-fast);
+}
+.cqm-close:hover {
+  background: var(--bg-hover);
+  color: var(--text-secondary);
+}
+.cqm-close:focus-visible {
+  outline: 2px solid var(--primary);
+  outline-offset: 2px;
+}
+.cqm-icon {
+  width: 52px;
+  height: 52px;
+  margin: 0 auto var(--spacing-sm);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--radius-lg);
+  background: var(--accent-dim);
+  color: var(--primary);
+}
+.cqm-title {
+  font-family: var(--font-display);
+  font-size: var(--text-h4);
+  font-weight: var(--weight-bold);
+  color: var(--text-primary);
+  margin-bottom: var(--spacing-sm);
+}
+.cqm-text {
+  font-size: var(--text-sm);
+  line-height: 1.5;
+  color: var(--text-secondary);
+  margin-bottom: var(--spacing-xs);
+}
+.cqm-text .cqm-resource {
+  font-weight: var(--weight-semibold);
+  color: var(--text-primary);
+}
+.cqm-sub {
+  font-size: var(--text-sm);
+  color: var(--text-muted);
+  margin-bottom: var(--spacing-md);
+}
+.cqm-countdown {
+  font-weight: var(--weight-bold);
+  color: var(--primary);
+  font-variant-numeric: tabular-nums;
+}
+.cqm-recharge {
+  width: 100%;
+  padding: 0.8rem;
+  border-radius: var(--radius-md);
+  background: linear-gradient(135deg, var(--primary) 0%, #a78bfa 100%);
+  color: #fff;
+  border: none;
+  font-size: var(--text-sm);
+  font-weight: var(--weight-bold);
+  font-family: var(--font-display);
+  cursor: pointer;
+  transition: opacity var(--transition-fast), transform var(--transition-fast);
+}
+.cqm-recharge:hover {
+  opacity: 0.92;
+}
+.cqm-recharge:focus-visible {
+  outline: 2px solid var(--primary);
+  outline-offset: 2px;
+}
+.cqm-later {
+  margin-top: var(--spacing-sm);
+  padding: 0.5rem;
+  border: none;
+  background: transparent;
+  color: var(--text-muted);
+  font-size: var(--text-sm);
+  font-family: var(--font-body);
+  cursor: pointer;
+  transition: color var(--transition-fast);
+}
+.cqm-later:hover {
+  color: var(--text-secondary);
+}
+.cqm-later:focus-visible {
+  outline: 2px solid var(--primary);
+  outline-offset: 2px;
+  border-radius: var(--radius-sm);
+}
+
+/* Desktop */
+@media (min-width: 769px) {
+  .cqm {
+    align-items: center;
+    padding: 1rem;
+  }
+  .cqm-sheet {
+    border-radius: var(--radius-lg);
+    max-width: 380px;
+    padding-bottom: var(--spacing-lg);
+    box-shadow: var(--shadow-modal);
+  }
+  .cqm-handle {
+    display: none;
+  }
+  .cqm.cqm--open .cqm-sheet {
+    animation: cqmCenterIn 0.22s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+}
+@keyframes cqmCenterIn {
+  from { transform: translateY(10px) scale(0.98); opacity: 0; }
+  to   { transform: translateY(0)    scale(1);    opacity: 1; }
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  .cqm.cqm--open .cqm-sheet {
+    animation: none;
+  }
+}

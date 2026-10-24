@@ -1,0 +1,132 @@
+/* topbar removed — using lp-pill-nav from landing.css */
+
+.about-cover {
+  width: 100%;
+  height: 220px;
+  background: linear-gradient(135deg, #0d0d1a 0%, #1a1040 50%, #2d1f6e 100%);
+  overflow: hidden;
+}
+
+.about-logo-mark {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  background: var(--bg-header, rgba(13,13,13,0.82));
+  border: 1px solid var(--primary-alpha, rgba(124,108,250,0.25));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: -32px auto 1.5rem;
+  position: relative;
+  z-index: 2;
+  overflow: hidden;
+}
+
+.logo-image-1 {
+  width: 70px !important; 
+  height: 70px !important;
+  object-fit: contain;
+  display: block;
+}
+
+.about-body {
+  max-width: 640px;
+  margin: 0 auto;
+  padding: 0 1.25rem 5rem;
+}
+
+.about-title {
+  font-family: var(--font-display, 'Space Grotesk', system-ui, sans-serif);
+  font-size: clamp(1.6rem, 4vw, 2.2rem);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: var(--text-primary);
+  margin-bottom: 0.4rem;
+}
+.about-meta {
+  font-size: 0.82rem;
+  color: var(--text-muted);
+  margin-bottom: 1.25rem;
+}
+
+.about-section-heading {
+  font-family: var(--font-display, 'Space Grotesk', system-ui, sans-serif);
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin: 1.5rem 0 0.75rem;
+  letter-spacing: -0.01em;
+}
+
+.about-body p {
+  font-size: 0.93rem;
+  color: var(--text-secondary);
+  line-height: 1.75;
+  margin-bottom: 0.9rem;
+}
+.about-body strong {
+  color: var(--text-primary);
+  font-weight: 600;
+}
+
+.about-divider {
+  border: none;
+  border-top: 1px solid var(--border);
+  margin: 1.75rem 0;
+}
+
+.about-checklist {
+  list-style: none;
+  padding: 0;
+  margin: 0.75rem 0 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+.about-checklist li {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.65rem;
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+  line-height: 1.6;
+}
+.about-checklist li i {
+  color: var(--primary);
+  font-size: 1rem;
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+.btn-about-cta {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  width: 100%;
+  padding: 1rem;
+  margin-top: 2rem;
+  background: var(--primary);
+  color: #fff;
+  border: none;
+  border-radius: var(--radius-md, 12px);
+  font-size: 1rem;
+  font-weight: 600;
+  font-family: var(--font-display, 'Space Grotesk', system-ui, sans-serif);
+  text-decoration: none;
+  cursor: pointer;
+  transition: opacity 0.15s;
+}
+.btn-about-cta:hover {
+  opacity: 0.88;
+}
+.about-cta-note {
+  text-align: center;
+  font-size: 0.78rem;
+  color: var(--text-muted);
+  margin-top: 0.75rem;
+}
+
+@media (max-width: 640px) {
+  .about-cover { height: 160px; }
+}

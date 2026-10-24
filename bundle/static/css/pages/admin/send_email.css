@@ -1,0 +1,318 @@
+
+/* ── Toggle group ── */
+.toggle-group {
+    display: flex; gap: .4rem;
+    background: var(--bg-secondary);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: .25rem;
+    margin-bottom: 1rem;
+}
+.toggle-btn {
+    flex: 1; padding: .5rem .75rem;
+    border: none; border-radius: 7px;
+    background: transparent;
+    color: var(--text-muted);
+    font-family: var(--font-body);
+    font-size: .8rem; font-weight: 700;
+    cursor: pointer;
+    display: inline-flex; align-items: center; justify-content: center; gap: .4rem;
+    transition: background .15s, color .15s, box-shadow .15s;
+}
+.toggle-btn i { font-size: .72rem; }
+.toggle-btn:hover { background: var(--bg-hover); color: var(--text-secondary); }
+.toggle-btn.active { background: var(--primary); color: #fff; box-shadow: 0 2px 8px color-mix(in srgb, var(--primary) 30%, transparent); }
+
+/* ── User select panel ── */
+.user-select-wrapper {
+    display: none;
+    border: 1.5px solid var(--border);
+    border-radius: var(--radius-md);
+    overflow: hidden;
+    margin-top: .5rem;
+}
+.user-select-wrapper.visible { display: block; }
+
+.select-all-row {
+    display: flex; align-items: center; gap: .6rem;
+    padding: .6rem .875rem;
+    background: var(--bg-secondary);
+    border-bottom: 1px solid var(--border);
+    font-size: .8rem; font-weight: 700;
+    color: var(--text-secondary);
+    cursor: pointer;
+    user-select: none;
+    transition: background .15s;
+}
+.select-all-row:hover { background: var(--bg-hover); }
+
+/* ── User search row ── */
+.user-search-row {
+    display: flex; align-items: center; gap: .75rem;
+    padding: .5rem .875rem;
+    background: var(--bg-primary);
+    border-bottom: 1px solid var(--border);
+}
+.user-search-input {
+    flex: 1;
+    padding: .4rem .7rem;
+    font-size: .78rem;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    background: var(--bg-secondary);
+    color: var(--text-primary);
+    outline: none;
+    transition: border-color .15s;
+}
+.user-search-input:focus {
+    border-color: var(--primary);
+    box-shadow: 0 0 0 2px color-mix(in srgb, var(--primary) 15%, transparent);
+}
+.user-search-input::placeholder { color: var(--text-muted); }
+.user-search-count {
+    font-size: .72rem; font-weight: 600;
+    color: var(--text-muted);
+    white-space: nowrap;
+}
+
+.user-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: .8rem;
+}
+.user-table thead tr {
+    background: var(--bg-secondary);
+    border-bottom: 1px solid var(--border);
+}
+.user-table th {
+    padding: .5rem .875rem;
+    font-size: .65rem; font-weight: 700;
+    text-transform: uppercase; letter-spacing: .06em;
+    color: var(--text-muted);
+    text-align: left;
+}
+.user-table td {
+    padding: .55rem .875rem;
+    color: var(--text-secondary);
+    border-bottom: 1px solid var(--border);
+}
+.user-table tbody tr:last-child td { border-bottom: none; }
+.user-table tbody tr:hover { background: var(--bg-hover); }
+.user-table td:first-child { width: 40px; }
+
+/* ── Checkbox style ── */
+.user-check {
+    width: 15px; height: 15px;
+    accent-color: var(--primary);
+    cursor: pointer;
+}
+
+/* ── Textarea height ── */
+textarea.adm-form-input { min-height: 100px; }
+
+/* ── Form row (side-by-side fields) ── */
+.adm-form-row {
+    display: flex; gap: 1rem;
+}
+.adm-form-row > div { flex: 1; }
+
+/* ── Optional label ── */
+.adm-form-optional {
+    font-size: .7rem; font-weight: 400;
+    color: var(--text-muted);
+}
+
+/* ── Preview button ── */
+.adm-btn--secondary {
+    background: var(--bg-secondary);
+    color: var(--text-secondary);
+    border: 1px solid var(--border);
+}
+.adm-btn--secondary:hover {
+    background: var(--bg-hover);
+    color: var(--text-primary);
+}
+
+/* ── Preview modal ── */
+.email-preview-modal {
+    position: fixed; inset: 0; z-index: 9999;
+    display: flex; align-items: center; justify-content: center;
+}
+.email-preview-backdrop {
+    position: absolute; inset: 0;
+    background: rgba(0,0,0,.5);
+    cursor: pointer;
+}
+.email-preview-content {
+    position: relative; z-index: 1;
+    background: var(--bg-primary);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    width: 680px; max-width: 95vw;
+    max-height: 90vh;
+    display: flex; flex-direction: column;
+    box-shadow: 0 20px 60px rgba(0,0,0,.3);
+    overflow: hidden;
+}
+.email-preview-header {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 16px 20px;
+    border-bottom: 1px solid var(--border);
+}
+.email-preview-header h3 {
+    margin: 0; font-size: .9rem; font-weight: 700;
+    color: var(--text-primary);
+}
+.email-preview-close {
+    background: none; border: none; font-size: 1.4rem;
+    color: var(--text-muted); cursor: pointer; padding: 0 4px;
+    line-height: 1;
+}
+.email-preview-close:hover { color: var(--text-primary); }
+.email-preview-body {
+    padding: 20px;
+    overflow-y: auto;
+    background: #f4f5f7;
+}
+/* Campaign status pills + compact action buttons */
+.adm-pill {
+    display: inline-block; padding: 2px 10px; border-radius: 999px;
+    font-size: .72rem; font-weight: 700; white-space: nowrap;
+    background: var(--bg-hover); color: var(--text-secondary);
+    border: 1px solid var(--border);
+}
+.adm-pill--sending, .adm-pill--approved { background: rgba(37,99,235,.1); color: #2563eb; border-color: rgba(37,99,235,.25); }
+.adm-pill--paused_approval { background: rgba(245,158,11,.12); color: #d97706; border-color: rgba(245,158,11,.3); }
+.adm-pill--done { background: rgba(16,185,129,.1); color: #0f9f6e; border-color: rgba(16,185,129,.25); }
+.adm-pill--cancelled { background: rgba(239,68,68,.08); color: #ef4444; border-color: rgba(239,68,68,.2); }
+.adm-btn--sm { padding: .3rem .6rem; font-size: .75rem; }
+
+/* ══ Vercel-clean email layout (ml-*) — works with the existing token
+   system; all colors/surfaces come from theme vars, both themes. ══ */
+
+/* Page head */
+.ml-pagehead {
+    display: flex; align-items: flex-end; justify-content: space-between;
+    gap: 1rem; margin-bottom: 1.25rem; flex-wrap: wrap;
+}
+.ml-eyebrow {
+    margin: 0 0 .25rem; font-size: .68rem; font-weight: 700;
+    text-transform: uppercase; letter-spacing: .1em; color: var(--text-muted);
+}
+.ml-title {
+    margin: 0; font-family: var(--font-display); font-size: 1.5rem;
+    font-weight: 800; letter-spacing: -0.02em; line-height: 1.15;
+    color: var(--text-primary); text-wrap: balance;
+}
+.ml-sub { margin: .3rem 0 0; font-size: .82rem; color: var(--text-muted); max-width: 62ch; }
+.ml-head-side { display: flex; align-items: center; gap: .6rem; }
+.ml-quota-chip {
+    display: inline-flex; align-items: center;
+    font-size: .75rem; font-weight: 600; color: var(--text-secondary);
+    border: 1px solid var(--border); border-radius: 999px; padding: .35rem .7rem;
+    background: var(--bg-secondary); white-space: nowrap;
+}
+
+/* Status dots */
+.ml-dot { display: inline-block; width: 7px; height: 7px; border-radius: 50%; background: var(--text-muted); flex-shrink: 0; }
+.ml-dot--live { background: var(--success, #10b981); box-shadow: 0 0 0 3px rgba(16,185,129,.15); }
+.adm-pill--sending .ml-dot, .adm-pill--approved .ml-dot { background: #2563eb; }
+.adm-pill--paused_approval .ml-dot { background: #d97706; }
+.adm-pill--done .ml-dot { background: #0f9f6e; }
+.adm-pill--cancelled .ml-dot { background: #ef4444; }
+.adm-pill--queued .ml-dot { background: var(--text-muted); }
+
+/* Quota meter band */
+.ml-meter {
+    border: 1px solid var(--border); border-radius: var(--radius-md);
+    background: var(--bg-card, var(--bg-primary));
+    padding: 1rem 1.25rem .9rem; margin-bottom: 1.25rem;
+}
+.ml-meter-row { display: flex; gap: 2rem; flex-wrap: wrap; }
+.ml-metric-num { margin: 0; font-size: 1.2rem; font-weight: 700; color: var(--text-primary); }
+.ml-metric-label {
+    margin: .15rem 0 0; font-size: .66rem; font-weight: 700;
+    text-transform: uppercase; letter-spacing: .08em; color: var(--text-muted);
+}
+.ml-bar { height: 4px; border-radius: 2px; background: var(--bg-hover); margin-top: .9rem; overflow: hidden; }
+.ml-bar span { display: block; height: 100%; background: var(--primary); border-radius: 2px; transition: width .3s ease; }
+.ml-meter-note { margin: .6rem 0 0; }
+
+/* Tabs */
+.ml-tabs {
+    display: flex; gap: 1.25rem;
+    border-bottom: 1px solid var(--border); margin-bottom: 1.25rem;
+}
+.ml-tab {
+    background: none; border: none; cursor: pointer;
+    padding: .55rem .1rem; font-size: .83rem; font-weight: 600;
+    color: var(--text-muted); border-bottom: 2px solid transparent;
+    margin-bottom: -1px; transition: color .15s ease, border-color .15s ease;
+}
+.ml-tab:hover { color: var(--text-primary); }
+.ml-tab.active { color: var(--text-primary); border-bottom-color: var(--primary); }
+.ml-tab:focus-visible { outline: 2px solid var(--primary); outline-offset: 4px; border-radius: 2px; }
+.ml-count { font-size: .72rem; color: var(--text-muted); }
+
+/* Status pills (dot + label) */
+.adm-pill {
+    display: inline-flex; align-items: center; gap: .4rem;
+    padding: 3px 10px; border-radius: 6px;
+    font-size: .7rem; font-weight: 600; white-space: nowrap;
+    background: var(--bg-hover); color: var(--text-secondary);
+    border: 1px solid var(--border);
+}
+.adm-pill--sending, .adm-pill--approved { background: rgba(37,99,235,.08); color: #2563eb; border-color: rgba(37,99,235,.22); }
+.adm-pill--paused_approval { background: rgba(245,158,11,.1); color: #b45309; border-color: rgba(245,158,11,.28); }
+.adm-pill--done { background: rgba(16,185,129,.08); color: #0f9f6e; border-color: rgba(16,185,129,.22); }
+.adm-pill--cancelled { background: rgba(239,68,68,.07); color: #ef4444; border-color: rgba(239,68,68,.2); }
+[data-theme="dark"] .adm-pill--sending, [data-theme="dark"] .adm-pill--approved { color: #93c5fd; }
+[data-theme="dark"] .adm-pill--paused_approval { color: #fbbf24; }
+[data-theme="dark"] .adm-pill--done { color: #6ee7b7; }
+[data-theme="dark"] .adm-pill--cancelled { color: #fca5a5; }
+
+/* Mini progress + truncation helpers */
+.ml-progress { display: inline-block; width: 90px; height: 4px; border-radius: 2px; background: var(--bg-hover); vertical-align: middle; margin-right: .5rem; overflow: hidden; }
+.ml-progress span { display: block; height: 100%; background: var(--primary); }
+.ml-progress-num { font-size: .75rem; color: var(--text-secondary); }
+.ml-truncate { max-width: 320px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.ml-sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+
+/* Empty state */
+.ml-empty { padding: 2rem 1rem; text-align: center; }
+.ml-empty-title { margin: 0 0 .3rem; font-size: .9rem; font-weight: 700; color: var(--text-primary); }
+
+/* Rollout preview rows */
+.ml-rollout { border-top: 1px solid var(--border); margin-top: 1.25rem; padding-top: 1rem; }
+.ml-rollout-rows { margin: 0; }
+.ml-rollout-rows > div {
+    display: flex; justify-content: space-between; gap: 1rem;
+    padding: .45rem 0; border-bottom: 1px solid var(--border); font-size: .8rem;
+}
+.ml-rollout-rows > div:last-child { border-bottom: none; }
+.ml-rollout-rows dt { color: var(--text-muted); }
+.ml-rollout-rows dd { margin: 0; color: var(--text-primary); }
+
+/* Template cards */
+.ml-tpl-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: .75rem; }
+.ml-tpl-card {
+    border: 1px solid var(--border); border-radius: var(--radius-md);
+    padding: .9rem; background: var(--bg-card, var(--bg-primary));
+    display: flex; flex-direction: column; gap: .4rem;
+    transition: border-color .15s ease;
+}
+.ml-tpl-card:hover { border-color: var(--border-hover, var(--primary)); }
+.ml-tpl-name { margin: 0; font-size: .83rem; font-weight: 700; color: var(--text-primary); }
+.ml-tpl-subj {
+    margin: 0; font-size: .72rem; color: var(--text-muted);
+    overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+}
+.ml-tpl-error { color: #ef4444; }
+
+/* Focus + motion (Web Interface Guidelines) */
+#emailForm :focus-visible, .ml-tabs :focus-visible {
+    outline: 2px solid var(--primary); outline-offset: 2px;
+}
+@media (prefers-reduced-motion: reduce) {
+    .ml-bar span, .ml-tab, .ml-tpl-card, .toggle-btn { transition: none; }
+}

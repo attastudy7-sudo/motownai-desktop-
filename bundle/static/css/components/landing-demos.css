@@ -1,0 +1,21 @@
+
+
+
+/* ── Section Demos ── */
+
+.lp-live-preview {
+  position: relative;
+}
+
+.lp-live-preview-body {
+  position: relative;
+}
+.lp-live-preview-body::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: linear-gradient(to top, var(--lp-bg) 0%, transparent 35%);
+  opacity: 0.45;
+  z-index: 1;
+}

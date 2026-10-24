@@ -1,0 +1,445 @@
+
+/* ── Users page — Mantis-style table + dropdown ──────────────────── */
+
+/* ── Compact search in card header ──────────────────────────────── */
+.mu-search-compact {
+  display: flex;
+  align-items: center;
+  gap: .35rem;
+  background: var(--bg-secondary);
+  border: 1.5px solid var(--border);
+  border-radius: 8px;
+  padding: .25rem .55rem;
+  transition: border-color .15s;
+}
+.mu-search-compact:focus-within {
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--primary) 10%, transparent);
+}
+.mu-search-compact i {
+  font-size: .78rem;
+  color: var(--text-muted);
+  flex-shrink: 0;
+}
+.mu-search-compact-input {
+  border: none;
+  background: transparent;
+  color: var(--text-primary);
+  font-size: .8rem;
+  padding: .2rem 0;
+  width: 160px;
+  font-family: inherit;
+  outline: none;
+}
+.mu-search-compact-input::placeholder { color: var(--text-muted); opacity: .7; }
+.mu-search-clear {
+  color: var(--text-muted);
+  text-decoration: none;
+  font-size: 1rem;
+  line-height: 1;
+  padding: 0 .1rem;
+}
+.mu-search-clear:hover { color: var(--primary); }
+
+@media (max-width: 500px) {
+  .mu-search-compact-input { width: 100px; }
+}
+
+/* ── Buttons ─────────────────────────────────────────────────────── */
+.mu-btn {
+  display: inline-flex; align-items: center; gap: .35rem;
+  padding: .45rem .9rem; border-radius: 9px;
+  font-size: .8rem; font-weight: 700;
+  text-decoration: none; cursor: pointer; border: none;
+  transition: background .15s, color .15s;
+  white-space: nowrap;
+}
+.mu-btn--primary  { background: var(--btn-bg); color: var(--btn-text); border: 1.5px solid var(--btn-border); box-shadow: 0 2px 8px color-mix(in srgb, var(--primary) 12%, transparent); }
+.mu-btn--primary:hover { background: var(--btn-hover-bg); }
+.mu-btn--success  { background: rgba(16,185,129,.1); color: #059669; border: 1.5px solid rgba(16,185,129,.2); }
+.mu-btn--success:hover { background: #10b981; color: #fff; }
+.mu-btn--warning  { background: rgba(245,158,11,.1); color: #d97706; border: 1.5px solid rgba(245,158,11,.2); }
+.mu-btn--warning:hover { background: #f59e0b; color: #fff; }
+.mu-btn--outline  { background: transparent; color: var(--text-secondary); border: 1.5px solid var(--border); }
+.mu-btn--outline:hover { border-color: var(--primary); color: var(--primary); }
+.mu-btn--ghost    { background: transparent; color: var(--text-muted); }
+.mu-btn--ghost:hover { color: var(--primary); }
+.mu-btn--sm { padding: .3rem .65rem; font-size: .75rem; }
+.mu-btn:disabled { opacity: .5; cursor: default; }
+
+/* ── Checkbox ────────────────────────────────────────────────────── */
+.mu-check-wrap {
+  display: inline-flex; cursor: pointer; align-items: center;
+}
+.mu-check { position: absolute; opacity: 0; width: 16px; height: 16px; cursor: pointer; }
+.mu-check-box {
+  width: 16px; height: 16px;
+  border-radius: 4px;
+  border: 1.5px solid var(--border);
+  background: var(--bg-secondary);
+  display: block; position: relative;
+  transition: background .15s, border-color .15s;
+}
+.mu-check:checked + .mu-check-box {
+  background: var(--primary);
+  border-color: var(--primary);
+}
+.mu-check:checked + .mu-check-box::after {
+  content: '';
+  position: absolute;
+  left: 4px; top: 1px;
+  width: 5px; height: 8px;
+  border: solid #fff;
+  border-width: 0 2px 2px 0;
+  transform: rotate(45deg);
+}
+.mu-check:focus-visible + .mu-check-box {
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--primary) 25%, transparent);
+}
+
+/* ── Bulk action bar (inline in card header) ─────────────────────── */
+.mu-bulk[hidden] { display: none; }
+.mu-bulk {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: .5rem;
+  flex: 1;
+}
+.mu-bulk-count {
+  font-size: .75rem;
+  font-weight: 700;
+  color: var(--text-secondary);
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+.mu-bulk-actions {
+  display: flex;
+  gap: .25rem;
+  flex-wrap: wrap;
+}
+#muBulkClear { font-size: .7rem; padding: .2rem .5rem; }
+
+/* All bulk buttons use the same boring style as the search input */
+.mu-bulk .mu-btn {
+  font-size: .7rem;
+  background: var(--bg-secondary);
+  border: 1.5px solid var(--border);
+  border-radius: 8px;
+  color: var(--text-secondary);
+  box-shadow: none;
+}
+.mu-bulk .mu-btn i {
+  font-size: .7rem;
+}
+.mu-bulk .mu-btn:hover {
+  border-color: var(--primary);
+  color: var(--primary);
+  background: color-mix(in srgb, var(--primary) 6%, transparent);
+}
+.mu-bulk .mu-btn:active {
+  background: color-mix(in srgb, var(--primary) 12%, transparent);
+}
+.mu-bulk .mu-btn--ghost {
+  background: transparent;
+  border-color: transparent;
+  color: var(--text-muted);
+}
+.mu-bulk .mu-btn--ghost:hover {
+  color: var(--primary);
+  border-color: transparent;
+  background: transparent;
+}
+
+/* ── Table overrides ─────────────────────────────────────────────── */
+.mu-tbl thead th {
+  font-size: .62rem;
+  padding: .6rem .65rem;
+}
+.mu-tbl tbody td {
+  padding: .55rem .65rem;
+  font-size: .82rem;
+  vertical-align: middle;
+}
+.mu-tbl tbody tr:hover td { background: var(--bg-hover); }
+
+.mu-row--inactive { opacity: .55; }
+
+/* ── User cell ───────────────────────────────────────────────────── */
+.mu-user-cell {
+  display: flex;
+  align-items: center;
+  gap: .65rem;
+}
+.mu-avatar-wrap {
+  position: relative;
+  flex-shrink: 0;
+}
+.mu-avatar {
+  width: 34px; height: 34px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid var(--border);
+  display: block;
+}
+.mu-dot {
+  position: absolute;
+  bottom: -1px; right: -1px;
+  width: 10px; height: 10px;
+  border-radius: 50%;
+  border: 2px solid var(--bg-card);
+}
+.mu-dot--on  { background: #10b981; }
+.mu-dot--off { background: #ef4444; }
+
+.mu-user-body { min-width: 0; }
+.mu-user-name {
+  font-weight: 700;
+  font-size: .84rem;
+  color: var(--text-primary);
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+.mu-user-handle {
+  font-size: .71rem;
+  color: var(--text-muted);
+  margin-top: .02rem;
+}
+
+.mu-email {
+  color: var(--text-secondary);
+  font-size: .8rem;
+  word-break: break-all;
+}
+.mu-meta {
+  font-size: .68rem;
+  color: var(--text-muted);
+  margin-top: .08rem;
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+  max-width: 180px;
+}
+
+/* ── Pills ───────────────────────────────────────────────────────── */
+.mu-pill {
+  display: inline-flex; align-items: center; gap: .25rem;
+  padding: .12rem .45rem; border-radius: 99px;
+  font-size: .66rem; font-weight: 700; white-space: nowrap;
+}
+.mu-pill--premium { background: rgba(139,92,246,.1); color: #7c3aed; }
+.mu-pill--starter { background: rgba(245,158,11,.1); color: #d97706; }
+.mu-pill--admin   { background: rgba(99,102,241,.1); color: var(--primary); }
+.mu-pill--free    { background: var(--bg-hover); color: var(--text-muted); border: 1px solid var(--border); }
+
+.mu-sub-date {
+  font-size: .65rem;
+  color: var(--text-muted);
+  margin-top: .08rem;
+}
+
+/* ── Status ──────────────────────────────────────────────────────── */
+.mu-status {
+  display: inline-flex; align-items: center; gap: .35rem;
+  font-size: .78rem; color: var(--text-secondary);
+}
+.mu-status-dot {
+  width: 7px; height: 7px; border-radius: 50%; display: inline-block;
+}
+.mu-status-dot--on  { background: #10b981; }
+.mu-status-dot--off { background: #ef4444; }
+
+/* ── Stats row ───────────────────────────────────────────────────── */
+.mu-stats-row {
+  display: flex; align-items: center; gap: .6rem;
+}
+.mu-stat {
+  font-size: .75rem; font-weight: 600;
+  color: var(--text-secondary);
+  white-space: nowrap;
+  display: flex; align-items: center; gap: .15rem;
+}
+.mu-stat-val {
+  font-family: var(--font-mono);
+  font-variant-numeric: tabular-nums;
+}
+.mu-stat--streak { color: #f97316; }
+
+/* ── Date ────────────────────────────────────────────────────────── */
+.mu-date {
+  font-size: .75rem;
+  color: var(--text-muted);
+  white-space: nowrap;
+}
+
+/* ── Dropdown ────────────────────────────────────────────────────── */
+.mu-dropdown {
+  position: relative;
+  display: inline-block;
+}
+.mu-dropdown-trigger {
+  width: 30px; height: 30px;
+  border-radius: 7px;
+  border: 1.5px solid transparent;
+  background: transparent;
+  color: var(--text-muted);
+  display: inline-flex; align-items: center; justify-content: center;
+  cursor: pointer; font-size: .85rem;
+  transition: background .12s, border-color .12s, color .12s;
+}
+.mu-dropdown-trigger:hover {
+  background: var(--bg-hover);
+  border-color: var(--border);
+  color: var(--text-primary);
+}
+.mu-dropdown-menu {
+  position: absolute;
+  right: 0; top: calc(100% + 4px);
+  min-width: 190px;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  box-shadow: 0 8px 24px rgba(0,0,0,.08);
+  z-index: 50;
+  padding: .35rem;
+  display: none;
+  text-align: left;
+}
+.mu-dropdown-menu.is-open { display: block; }
+.mu-dropdown-item {
+  display: flex; align-items: center; gap: .5rem;
+  padding: .4rem .65rem;
+  border-radius: 6px;
+  font-size: .8rem; font-weight: 600;
+  color: var(--text-secondary);
+  text-decoration: none;
+  cursor: pointer;
+  border: none;
+  background: none;
+  width: 100%;
+  font-family: inherit;
+  transition: background .1s, color .1s;
+  white-space: nowrap;
+}
+.mu-dropdown-item i { width: 14px; text-align: center; font-size: .8rem; flex-shrink: 0; }
+.mu-dropdown-item:hover { background: var(--bg-hover); color: var(--text-primary); }
+.mu-dropdown-item--danger { color: #ef4444; }
+.mu-dropdown-item--danger:hover { background: rgba(239,68,68,.06); color: #dc2626; }
+.mu-dropdown-divider {
+  height: 1px;
+  background: var(--border);
+  margin: .25rem .5rem;
+}
+.mu-dropdown-form { display: contents; }
+
+/* ── Credits inline in dropdown ──────────────────────────────────── */
+.mu-credits-form-inline {
+  display: flex; align-items: center; gap: .35rem;
+  padding: .35rem .65rem;
+}
+.mu-credits-input {
+  width: 60px;
+  background: var(--bg-secondary);
+  border: 1.5px solid var(--border);
+  border-radius: 6px;
+  color: var(--text-primary);
+  font-size: .78rem;
+  padding: .2rem .35rem;
+  text-align: center;
+  font-family: inherit;
+}
+.mu-credits-input:focus { outline: none; border-color: var(--primary); }
+.mu-credits-set {
+  background: var(--bg-hover);
+  border: 1.5px solid var(--border);
+  border-radius: 6px;
+  color: var(--text-secondary);
+  font-size: .7rem; font-weight: 700;
+  padding: .2rem .45rem;
+  cursor: pointer;
+  transition: background .12s, color .12s;
+}
+.mu-credits-set:hover { background: var(--primary); color: #fff; border-color: var(--primary); }
+
+/* ── Pagination ──────────────────────────────────────────────────── */
+.mu-pagination {
+  display: flex; align-items: center; justify-content: center;
+  gap: 1rem; padding: 1rem 0 .5rem;
+}
+.mu-page-btn {
+  display: inline-flex; align-items: center; gap: .3rem;
+  padding: .4rem .875rem; border-radius: var(--radius-sm);
+  background: color-mix(in srgb, var(--primary) 7%, transparent);
+  color: var(--primary);
+  font-size: .8rem; font-weight: 600;
+  text-decoration: none;
+  transition: background .15s;
+}
+.mu-page-btn:hover { background: color-mix(in srgb, var(--primary) 15%, transparent); }
+.mu-page-info { font-size: .75rem; color: var(--text-muted); }
+
+/* ── Responsive helpers ──────────────────────────────────────────── */
+@media (max-width: 900px) {
+  .mu-hide-md { display: none; }
+  .mu-tbl thead th, .mu-tbl tbody td { padding: .5rem .55rem; }
+}
+@media (max-width: 700px) {
+  .mu-hide-sm { display: none; }
+  .mu-tbl thead th, .mu-tbl tbody td { padding: .45rem .45rem; font-size: .78rem; }
+  .mu-avatar { width: 28px; height: 28px; }
+  .mu-user-name { font-size: .78rem; }
+  .mu-pagination { flex-wrap: wrap; gap: .5rem; }
+}
+@media (max-width: 500px) {
+  .mu-search-wrap { min-width: 140px; }
+  .mu-bulk-actions .mu-btn { font-size: .7rem; padding: .25rem .5rem; }
+}
+
+/* ── Country filter + column ─────────────────────────────────────────────── */
+.mu-head-tools {
+  display: flex;
+  align-items: center;
+  gap: .5rem;
+}
+.mu-country-filter {
+  /* Custom dropdown: native chrome stripped so it renders with theme tokens. */
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  font-size: .78rem;
+  font-weight: 600;
+  color: var(--text);
+  background-color: var(--bg-secondary);
+  background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%2394a3b8' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right .5rem center;
+  background-size: .8rem;
+  border: 1.5px solid var(--border);
+  border-radius: 8px;
+  padding: .35rem 1.6rem .35rem .6rem;
+  max-width: 220px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  cursor: pointer;
+  outline: none;
+  transition: border-color .15s;
+}
+.mu-country-filter:hover,
+.mu-country-filter:focus {
+  border-color: var(--primary);
+}
+.mu-country-filter--active {
+  border-color: var(--primary);
+}
+.mu-country-filter option {
+  color: var(--text);
+  background: var(--bg-card);
+}
+.mu-country { color: var(--text); }
+.mu-country-flag { margin-right: .35rem; }
+.mu-country--na { color: var(--text-muted); }
+.mu-sort-link {
+  color: var(--text);
+  text-decoration: none;
+  white-space: nowrap;
+}
+.mu-sort-link:hover { color: var(--primary); }
+

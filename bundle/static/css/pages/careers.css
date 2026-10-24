@@ -1,0 +1,218 @@
+/* ── Careers ──────────────────────────────────────────────────────
+   Uses the app's design tokens via style.css. Self-contained layout.
+   ─────────────────────────────────────────────────────────────────*/
+
+/* ── Cover ── */
+.careers-cover {
+  width: 100%;
+  height: 220px;
+  background: linear-gradient(135deg, #0d0d1a 0%, #1a1040 50%, #2d1f6e 100%);
+  overflow: hidden;
+}
+
+/* ── Logo Mark ── */
+.careers-logo-mark {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  background: var(--bg-header, rgba(13,13,13,0.82));
+  border: 1px solid var(--primary-alpha, rgba(124,108,250,0.25));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: -32px auto 1.5rem;
+  position: relative;
+  z-index: 2;
+  overflow: hidden;
+}
+
+.logo-image-1 {
+  width: 70px;
+  height: 70px;
+  object-fit: contain;
+  display: block;
+}
+
+/* ── Body Column ── */
+.careers-body {
+  max-width: 640px;
+  margin: 0 auto;
+  padding: 0 1.25rem 5rem;
+}
+
+/* ── Title ── */
+.careers-title {
+  font-family: var(--font-display, 'Space Grotesk', system-ui, sans-serif);
+  font-size: clamp(1.6rem, 4vw, 2.2rem);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: var(--text-primary);
+  margin-bottom: 0.4rem;
+}
+.careers-meta {
+  font-size: 0.82rem;
+  color: var(--text-muted);
+  margin-bottom: 1.25rem;
+}
+
+/* ── Section Headings ── */
+.careers-section-heading {
+  font-family: var(--font-display, 'Space Grotesk', system-ui, sans-serif);
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin: 1.5rem 0 0.75rem;
+  letter-spacing: -0.01em;
+}
+
+/* ── Body Copy ── */
+.careers-body p {
+  font-size: 0.93rem;
+  color: var(--text-secondary);
+  line-height: 1.75;
+  margin-bottom: 0.9rem;
+}
+.careers-body strong {
+  color: var(--text-primary);
+  font-weight: 600;
+}
+
+/* ── Divider ── */
+.careers-divider {
+  border: none;
+  border-top: 1px solid var(--border);
+  margin: 1.75rem 0;
+}
+
+/* ── Checklist ── */
+.careers-checklist {
+  list-style: none;
+  padding: 0;
+  margin: 0.75rem 0 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+.careers-checklist li {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.65rem;
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+  line-height: 1.6;
+}
+.careers-checklist li i {
+  color: var(--primary);
+  font-size: 1rem;
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+/* ── Inline Icon ── */
+.careers-body .ti-coin {
+  color: var(--primary);
+  font-size: 1rem;
+  vertical-align: middle;
+  margin-right: 0.2rem;
+}
+
+/* ── Apply Button ── */
+.btn-careers-apply {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  width: 100%;
+  padding: 1rem;
+  margin-top: 2rem;
+  background: var(--primary);
+  color: #fff;
+  border: none;
+  border-radius: var(--radius-md, 12px);
+  font-size: 1rem;
+  font-weight: 600;
+  font-family: var(--font-display, 'Space Grotesk', system-ui, sans-serif);
+  text-decoration: none;
+  cursor: pointer;
+  transition: opacity 0.15s;
+}
+.btn-careers-apply:hover {
+  opacity: 0.88;
+}
+.apply-note {
+  text-align: center;
+  font-size: 0.78rem;
+  color: var(--text-muted);
+  margin-top: 0.75rem;
+}
+
+/* ── Apply form (borderless, blends with page) ── */
+.careers-apply-form { margin-top: 0.5rem; }
+
+.careers-field-label {
+  display: block;
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin: 1.1rem 0 0.4rem;
+}
+.careers-field-optional {
+  font-weight: 400;
+  color: var(--text-muted);
+  font-size: 0.75rem;
+  margin-left: 0.3rem;
+}
+.careers-field {
+  display: block;
+  width: 100%;
+  box-sizing: border-box;
+  background: transparent;
+  border: none;
+  border-bottom: 1px solid var(--border);
+  padding: 0.55rem 0.1rem;
+  font-size: 0.93rem;
+  color: var(--text-primary);
+  font-family: inherit;
+  transition: border-color 0.15s;
+}
+.careers-field::placeholder { color: var(--text-muted); }
+.careers-field:focus {
+  outline: none;
+  border-bottom-color: var(--primary);
+}
+.careers-field--textarea {
+  resize: vertical;
+  min-height: 90px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md, 8px);
+  padding: 0.65rem 0.75rem;
+}
+.careers-field--textarea:focus { border-color: var(--primary); }
+
+.careers-apply-error {
+  font-size: 0.85rem;
+  color: var(--danger, #ef4444);
+  margin: 0 0 0.5rem;
+}
+.careers-apply-success {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.6rem;
+  margin-top: 2rem;
+  color: var(--text-primary);
+}
+.careers-apply-success i {
+  color: #22c55e;
+  font-size: 1.3rem;
+  flex-shrink: 0;
+}
+.careers-apply-success p {
+  font-size: 0.93rem;
+  line-height: 1.6;
+  margin: 0;
+}
+
+/* ── Responsive ── */
+@media (max-width: 640px) {
+  .careers-cover { height: 160px; }
+}

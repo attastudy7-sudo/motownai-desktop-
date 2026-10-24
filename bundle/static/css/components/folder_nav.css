@@ -1,0 +1,684 @@
+/* ── Folder list — lives inside the toggleable .folders-panel (dashboard, desktop) ── */
+
+.dsn-folders {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-height: 0;
+}
+
+.dsn-folders__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 4px 6px 14px;
+  flex-shrink: 0;
+}
+
+.dsn-folders__label {
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  font-family: var(--font-display);
+}
+
+.folders-panel__collapse-btn {
+  width: 26px;
+  height: 26px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  border: none;
+  border-radius: 6px;
+  color: var(--text-muted);
+  cursor: pointer;
+  transition: background 0.15s, color 0.15s;
+  padding: 0;
+  flex-shrink: 0;
+}
+
+.folders-panel__collapse-btn:hover {
+  background: var(--bg-hover);
+  color: var(--text-primary);
+}
+
+.dsn-folders__add-btn {
+  width: 20px;
+  height: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  border: none;
+  border-radius: 4px;
+  color: var(--text-muted);
+  cursor: pointer;
+  transition: background 0.15s, color 0.15s;
+  padding: 0;
+}
+
+.dsn-folders__add-btn:hover {
+  background: var(--bg-hover);
+  color: var(--text-primary);
+}
+
+/* ── Prominent "Create New Folder" button ── */
+.dsn-folders__add-btn.dsn-folders__create-btn {
+  width: 100%;
+  height: auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 12px 16px;
+  margin: 0 0 14px;
+  border-radius: 11px;
+  background: var(--primary);
+  color: #fff;
+  font-size: 0.88rem;
+  font-weight: 700;
+  font-family: var(--font-body);
+  flex-shrink: 0;
+  transition: opacity 0.15s ease;
+}
+
+.dsn-folders__add-btn.dsn-folders__create-btn:hover {
+  background: var(--primary);
+  opacity: 0.88;
+  color: #fff;
+}
+
+/* Scrollable list */
+.dsn-folders__list {
+  flex: 1;
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding: 0 8px 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  scrollbar-width: thin;
+  scrollbar-color:transparent transparent;
+  overscroll-behavior: contain;
+  -webkit-overflow-scrolling: touch;
+}
+
+.dsn-folders__list::-webkit-scrollbar { width: 3px; }
+.dsn-folders__list::-webkit-scrollbar-track { background: transparent; }
+.dsn-folders__list::-webkit-scrollbar-thumb { background: var(--border); border-radius: 2px; }
+
+/* Folder card */
+.dsn-folder-item {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  padding: 12px 14px;
+  background: var(--bg-card);
+  border: 1px solid transparent;
+  border-radius: 12px;
+  cursor: pointer;
+  text-align: left;
+  transition: background 0.12s, border-color 0.12s;
+  min-width: 0;
+}
+
+/* Colored accent bar — driven by the folder's --folder-accent custom property */
+.dsn-folder-item::before {
+  content: '';
+  position: absolute;
+  left: 6px;
+  top: 10px;
+  bottom: 10px;
+  width: 3px;
+  border-radius: 3px;
+  background: var(--folder-accent, transparent);
+}
+
+.dsn-folder-item:hover {
+  background: var(--bg-hover);
+}
+
+.dsn-folder-item.active {
+  background: var(--bg-hover);
+  border-color: var(--border-hover, var(--border));
+}
+
+.dsn-folder-item.active .dsn-folder-icon {
+  stroke: var(--text-primary);
+}
+
+.dsn-folder-item.active .dsn-folder-name {
+  color: var(--text-primary);
+}
+
+.dsn-folder-icon {
+  flex-shrink: 0;
+  stroke: var(--text-muted);
+  transition: stroke 0.15s;
+}
+
+.dsn-folder-text {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.dsn-folder-name {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  min-width: 0;
+  text-align: left;
+}
+
+.dsn-folder-meta {
+  font-size: 0.76rem;
+  font-weight: 500;
+  color: var(--text-muted);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  text-align: left;
+}
+
+.dsn-folder-count {
+  font-size: 10px;
+  font-weight: 600;
+  color: var(--text-muted);
+  background: var(--bg-hover);
+  padding: 1px 5px;
+  border-radius: 10px;
+  flex-shrink: 0;
+  min-width: 18px;
+  text-align: center;
+}
+
+/* ── Three-dot menu wrap ── */
+.dsn-folder-menu-wrap {
+  position: relative;
+  flex-shrink: 0;
+}
+
+.dsn-folder-menu__btn {
+  width: 22px;
+  height: 22px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  border: none;
+  border-radius: 4px;
+  color: var(--text-muted);
+  cursor: pointer;
+  padding: 0;
+  transition: background 0.15s, color 0.15s;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.dsn-folder-item:hover .dsn-folder-menu__btn {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.dsn-folder-item.active .dsn-folder-menu__btn {
+  opacity: 1;
+  pointer-events: auto;
+  color: var(--accent);
+}
+
+.dsn-folder-menu__btn:hover {
+  background: var(--bg-hover);
+  color: var(--text-primary);
+}
+
+/* ── Dropdown ── */
+.dsn-folder-menu {
+  display: none;
+  position: absolute;
+  top: calc(100% + 2px);
+  right: 0;
+  min-width: 110px;
+  background: var(--bg-card);
+  border: 0.5px solid var(--card-border);
+  border-radius: 7px;
+  box-shadow: var(--shadow-card);
+  z-index: 200;
+  overflow: hidden;
+  flex-direction: column;
+  padding: 4px;
+}
+
+.dsn-folder-menu--open {
+  display: flex;
+}
+
+.dsn-folder-menu__item {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  width: 100%;
+  padding: 7px 9px;
+  background: transparent;
+  border: none;
+  border-radius: 4px;
+  font-size: 11px;
+  font-weight: 500;
+  color: var(--text-primary);
+  cursor: pointer;
+  text-align: left;
+  transition: background 0.12s;
+  font-family: inherit;
+}
+
+.dsn-folder-menu__item:hover {
+  background: var(--bg-hover);
+}
+
+.dsn-folder-menu__item svg {
+  flex-shrink: 0;
+  stroke: var(--text-muted);
+  stroke-width: 2;
+}
+
+.dsn-folder-menu__item--danger {
+  color: #e05c5c;
+}
+
+.dsn-folder-menu__item--danger svg {
+  stroke: #e05c5c;
+}
+
+.dsn-folder-menu__item--danger:hover {
+  background: rgba(224,92,92,0.08);
+}
+
+/* Empty state */
+.dsn-folders__empty {
+  font-size: 11px;
+  color: var(--text-muted);
+  text-align: center;
+  padding: 16px 8px;
+  margin: 0 auto;
+  line-height: 1.6;
+}
+
+.dsn-folders__empty-cta {
+  background: none;
+  border: none;
+  color: var(--accent);
+  font-size: 11px;
+  cursor: pointer;
+  padding: 0;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+/* ── Folders toggle button (desktop dashboard toolbar) ── */
+.db-folders-toggle {
+  display: none;
+  align-items: center;
+  gap: 6px;
+  padding: 0 14px;
+  height: 34px;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+  background: var(--bg-card);
+  color: var(--text-secondary);
+  font-size: 0.82rem;
+  font-weight: 600;
+  font-family: var(--font-body);
+  cursor: pointer;
+  white-space: nowrap;
+  flex-shrink: 0;
+  transition: background 0.15s, color 0.15s, border-color 0.15s;
+}
+.db-folders-toggle svg {
+  flex-shrink: 0;
+  color: var(--text-muted);
+  transition: color 0.15s;
+}
+.db-folders-toggle:hover,
+.db-folders-toggle[aria-expanded="true"] {
+  background: var(--bg-hover);
+  color: var(--text-primary);
+  border-color: var(--border-hover, var(--border));
+}
+.db-folders-toggle:hover svg,
+.db-folders-toggle[aria-expanded="true"] svg {
+  color: var(--primary);
+}
+
+/* ── Folders panel — toggleable, lives IN the layout (push, not an overlay) ──
+   .db-content-row holds .db-wrap (flex:1) + this panel side by side. The panel
+   animates its own width from 0 -> 300px so .db-wrap visibly narrows when it
+   opens, instead of floating on top of the page. It stays pinned in the
+   viewport while the page scrolls via position:sticky (still reserves real
+   layout space, unlike position:fixed overlays). Desktop dashboard only. */
+.folders-panel {
+  display: none;
+}
+
+@media (min-width: 1024px) {
+  .db-folders-toggle {
+    display: inline-flex;
+  }
+
+  .db-content-row {
+    display: flex;
+    align-items: flex-start;
+    width: 100%;
+  }
+  .db-content-row .db-wrap {
+    flex: 1;
+    min-width: 0;
+  }
+
+  .folders-panel {
+    display: flex;
+    flex-shrink: 0;
+    width: 0;
+    overflow: hidden;
+    position: sticky;
+    /* Sits below the now-sticky .db-topbar (~60px) instead of overlapping it. */
+    top: 60px;
+    align-self: flex-start;
+    height: calc(100vh - 60px);
+    background: var(--bg-page);
+    border-left: 0.5px solid var(--border);
+    box-sizing: border-box;
+    transition: width 0.26s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  .folders-panel.open {
+    width: 300px;
+  }
+  /* Fixed inner width so content clips cleanly during the collapse animation
+     instead of reflowing/wrapping as the outer panel shrinks. */
+  .folders-panel > .dsn-folders {
+    width: 300px;
+    height: 100%;
+    padding: 18px 10px;
+    box-sizing: border-box;
+  }
+}
+
+/* ── New Folder bottom sheet (mobile) ── */
+
+.new-folder-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.4);
+    z-index: 6100;
+    backdrop-filter: blur(2px);
+    -webkit-backdrop-filter: blur(2px);
+    -webkit-tap-highlight-color: transparent;
+}
+
+.new-folder-overlay.open {
+    display: block;
+}
+
+.new-folder-sheet {
+    visibility: hidden;
+    pointer-events: none;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 6101;
+    background: var(--bg-card);
+    border-radius: 18px 18px 0 0;
+    border-top: 0.5px solid var(--border);
+    padding-bottom: env(safe-area-inset-bottom, 0px);
+    transform: translateY(100%);
+    transition: transform 280ms cubic-bezier(0.32, 0.72, 0, 1),
+                visibility 0s linear 0.28s;
+    overscroll-behavior: contain;
+}
+
+.new-folder-sheet.open {
+    visibility: visible;
+    pointer-events: auto;
+    transform: translateY(0);
+    transition: transform 280ms cubic-bezier(0.32, 0.72, 0, 1),
+                visibility 0s linear 0s;
+}
+
+.new-folder-handle {
+    width: 36px;
+    height: 4px;
+    background: var(--border);
+    border-radius: 2px;
+    margin: 12px auto 8px;
+    flex-shrink: 0;
+}
+
+.new-folder-inner {
+    padding: 1.25rem 1.25rem calc(1.25rem + env(safe-area-inset-bottom, 0px));
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+.new-folder-title {
+    font-family: var(--font-display);
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin: 0;
+    letter-spacing: -0.02em;
+}
+
+.new-folder-input {
+    width: 100%;
+    padding: 0.8rem 1rem;
+    border: 1.5px solid var(--border);
+    border-radius: 12px;
+    background: var(--bg-secondary);
+    color: var(--text-primary);
+    font-size: 1rem;
+    font-family: var(--font-body);
+    outline: none;
+    box-sizing: border-box;
+    transition: border-color 0.18s ease, box-shadow 0.18s ease;
+    -webkit-tap-highlight-color: transparent;
+}
+
+.new-folder-input::placeholder {
+    color: var(--text-muted);
+}
+
+.new-folder-input:focus {
+    border-color: var(--primary);
+    box-shadow: 0 0 0 3px var(--primary-soft);
+}
+
+.new-folder-input.shake {
+    animation: nf-shake 0.32s cubic-bezier(0.36, 0.07, 0.19, 0.97);
+    border-color: var(--danger);
+}
+
+@keyframes nf-shake {
+    0%, 100% { transform: translateX(0); }
+    20%       { transform: translateX(-6px); }
+    40%       { transform: translateX(6px); }
+    60%       { transform: translateX(-4px); }
+    80%       { transform: translateX(4px); }
+}
+
+.new-folder-error {
+    font-size: 0.78rem;
+    color: var(--danger);
+    margin: -0.25rem 0 0;
+    min-height: 1em;
+}
+
+.new-folder-actions {
+    display: flex;
+    gap: 0.625rem;
+    margin-top: 0.25rem;
+}
+
+.new-folder-btn {
+    flex: 1;
+    padding: 0.8rem;
+    border-radius: 12px;
+    font-size: 0.9rem;
+    font-weight: 700;
+    font-family: var(--font-body);
+    cursor: pointer;
+    border: none;
+    transition: opacity 0.15s ease, transform 60ms cubic-bezier(0.23, 1, 0.32, 1);
+    -webkit-tap-highlight-color: transparent;
+    touch-action: manipulation;
+}
+
+.new-folder-btn:active {
+    transform: scale(0.96);
+    transition: transform 60ms cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+.new-folder-btn--cancel {
+    background: var(--bg-secondary);
+    color: var(--text-secondary);
+    border: 1px solid var(--border);
+}
+
+.new-folder-btn--cancel:hover {
+    background: var(--bg-hover);
+}
+
+.new-folder-btn--create {
+    background: var(--primary);
+    color: #fff;
+    flex: 2;
+}
+
+.new-folder-btn--create:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+    transform: none;
+}
+
+.new-folder-btn--create:not(:disabled):hover {
+    opacity: 0.9;
+}
+
+/* ── Folder color grid ── */
+.folder-color-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 12px;
+    padding: 4px 0;
+}
+
+.folder-color-swatch {
+    width: 100%;
+    aspect-ratio: 1;
+    border-radius: 50%;
+    border: 3px solid transparent;
+    cursor: pointer;
+    padding: 0;
+    transition: transform 0.15s ease, border-color 0.15s ease, box-shadow 0.15s ease;
+    -webkit-tap-highlight-color: transparent;
+}
+
+.folder-color-swatch:hover {
+    transform: scale(1.1);
+}
+
+.folder-color-swatch:active {
+    transform: scale(0.95);
+}
+
+.folder-color-swatch.selected {
+    border-color: var(--text-primary);
+    box-shadow: 0 0 0 2px var(--bg-card), 0 0 0 4px var(--text-primary);
+}
+
+.folder-color-default {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 12px;
+    border-radius: 10px;
+    cursor: pointer;
+    color: var(--text-muted);
+    font-size: 0.85rem;
+    transition: background 0.15s ease, color 0.15s ease;
+    -webkit-tap-highlight-color: transparent;
+}
+
+.folder-color-default:hover {
+    background: var(--bg-secondary);
+    color: var(--text-primary);
+}
+
+.folder-color-default.selected {
+    background: var(--bg-secondary);
+    color: var(--text-primary);
+}
+
+/* ── Desktop: centered card modal ── */
+@media (min-width: 1024px) {
+    .new-folder-overlay {
+        align-items: center;
+        justify-content: center;
+        background: rgba(0, 0, 0, 0.55);
+        backdrop-filter: blur(8px);
+        -webkit-backdrop-filter: blur(8px);
+    }
+
+    .new-folder-sheet {
+        bottom: auto;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%) scale(0.95);
+        width: 100%;
+        max-width: 400px;
+        border-radius: 24px;
+        border: 1px solid var(--border);
+        box-shadow: var(--shadow-modal);
+        padding-bottom: 0;
+        transition: transform 280ms cubic-bezier(0.16, 1, 0.3, 1),
+                    opacity 200ms ease,
+                    visibility 0s linear 0.28s;
+        opacity: 0;
+    }
+
+    .new-folder-sheet.open {
+        transform: translate(-50%, -50%) scale(1);
+        opacity: 1;
+        transition: transform 280ms cubic-bezier(0.16, 1, 0.3, 1),
+                    opacity 200ms ease,
+                    visibility 0s linear 0s;
+    }
+
+    .new-folder-handle { display: none; }
+
+    .new-folder-inner {
+        padding: 28px 28px 24px;
+        gap: 1rem;
+    }
+
+    .new-folder-title {
+        font-size: 1.15rem;
+        font-weight: 800;
+    }
+
+    .new-folder-input {
+        padding: 0.75rem 1rem;
+        font-size: 0.95rem;
+    }
+}
+
+

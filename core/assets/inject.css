@@ -1,0 +1,45 @@
+/* Motown AI desktop: added to every page by the local server. */
+
+/* Packs are saved on this computer automatically, so the website's download controls go. */
+#offlineDownloadBtn,
+#offlineDownloadStatus,
+.offline-download-btn,
+a[href="/library/downloads"],
+a[href^="/library/downloads?"] { display: none !important; }
+
+.mdk-strip {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 2147483000;
+  display: flex; align-items: center; justify-content: center; gap: 8px;
+  height: 28px; padding: 0 16px;
+  font: 500 12.5px/1 var(--font-body, "DM Sans", system-ui, sans-serif);
+  color: #fff; background: #3a3550;
+  transform: translateY(-100%); opacity: 0;
+  transition: transform 220ms cubic-bezier(.23, 1, .32, 1), opacity 220ms cubic-bezier(.23, 1, .32, 1), background-color 200ms ease-out;
+  pointer-events: none;
+}
+.mdk-strip.mdk-show { transform: none; opacity: 1; }
+.mdk-strip.mdk-back { background: #1f7a4d; }
+.mdk-strip .mdk-dot { width: 6px; height: 6px; border-radius: 50%; background: currentColor; opacity: .7; }
+.mdk-strip .mdk-muted { opacity: .75; }
+html.mdk-offline body { padding-top: 28px !important; }
+
+.mdk-saving {
+  position: fixed; left: 16px; bottom: 16px; z-index: 2147483000;
+  display: flex; align-items: center; gap: 8px;
+  padding: 8px 12px; border-radius: 999px;
+  font: 500 12px/1 var(--font-body, "DM Sans", system-ui, sans-serif);
+  color: var(--text-muted, #a3a3b5);
+  background: var(--bg-elevated, var(--bg-secondary, rgba(24, 24, 32, .92)));
+  border: 1px solid var(--border, rgba(255, 255, 255, .08));
+  box-shadow: 0 4px 16px rgba(0, 0, 0, .18);
+  transform: translateY(8px); opacity: 0;
+  transition: transform 200ms cubic-bezier(.23, 1, .32, 1), opacity 200ms cubic-bezier(.23, 1, .32, 1);
+  pointer-events: none;
+}
+.mdk-saving.mdk-show { transform: none; opacity: 1; }
+.mdk-saving .mdk-bar { width: 56px; height: 4px; border-radius: 2px; background: var(--border, rgba(255, 255, 255, .1)); overflow: hidden; }
+.mdk-saving .mdk-fill { height: 100%; width: 0; border-radius: 2px; background: var(--primary, #7c6cfa); transition: width 300ms ease-out; }
+
+@media (prefers-reduced-motion: reduce) {
+  .mdk-strip, .mdk-saving { transition: opacity 150ms linear; transform: none; }
+}

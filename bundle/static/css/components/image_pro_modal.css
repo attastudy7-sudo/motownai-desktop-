@@ -1,0 +1,107 @@
+/* Image upload Pro upsell modal — reuses global design tokens (--bg-card,
+   --primary, --text-primary, --font-display). Calm, minimal, no baked-in walls. */
+#ipm {
+  position: fixed;
+  inset: 0;
+  z-index: 1200;
+  display: none;
+  align-items: flex-end;
+  justify-content: center;
+}
+#ipm.open { display: flex; }
+#ipm .ipm-bg {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.55);
+}
+#ipm .ipm-sheet {
+  position: relative;
+  width: min(440px, calc(100vw - 24px));
+  margin-bottom: max(12px, env(safe-area-inset-bottom));
+  background: var(--bg-card, #161616);
+  border: 1px solid var(--border, rgba(255, 255, 255, 0.08));
+  border-radius: 18px;
+  padding: 10px 18px 16px;
+  box-shadow: 0 24px 64px rgba(0, 0, 0, 0.5);
+  font-family: var(--font-body, system-ui, sans-serif);
+}
+#ipm .ipm-handle {
+  width: 40px;
+  height: 4px;
+  margin: 4px auto 12px;
+  border-radius: 999px;
+  background: var(--bg-hover, rgba(255, 255, 255, 0.14));
+}
+#ipm .ipm-head {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+}
+#ipm .ipm-icon {
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 42px;
+  height: 42px;
+  border-radius: 12px;
+  background: var(--primary-soft, rgba(124, 108, 250, 0.14));
+  color: var(--primary, #7c6cfa);
+}
+#ipm .ipm-title {
+  font-family: var(--font-display, inherit);
+  font-size: 1.05rem;
+  font-weight: 600;
+  color: var(--text-primary, #f2f2f2);
+  line-height: 1.3;
+  margin: 2px 0 4px;
+}
+#ipm .ipm-sub {
+  font-size: 0.84rem;
+  color: var(--text-muted, #9a9a9a);
+  line-height: 1.5;
+  margin: 0;
+}
+#ipm .ipm-close {
+  flex-shrink: 0;
+  margin-left: auto;
+  width: 32px;
+  height: 32px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  border-radius: 8px;
+  background: transparent;
+  color: var(--text-muted, #9a9a9a);
+  cursor: pointer;
+}
+#ipm .ipm-close:hover { background: var(--bg-hover, rgba(255, 255, 255, 0.06)); color: var(--text-primary); }
+#ipm .ipm-actions {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 18px;
+}
+#ipm .ipm-cancel {
+  background: transparent;
+  border: 1px solid var(--border, rgba(255, 255, 255, 0.12));
+  color: var(--text-muted, #9a9a9a);
+  padding: 9px 16px;
+  border-radius: 10px;
+  font-size: 0.85rem;
+  cursor: pointer;
+}
+#ipm .ipm-cancel:hover { color: var(--text-primary); border-color: var(--border); }
+#ipm .ipm-cta {
+  background: var(--primary, #7c6cfa);
+  color: #fff;
+  border: none;
+  padding: 9px 18px;
+  border-radius: 10px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+#ipm .ipm-cta:hover { filter: brightness(1.08); }

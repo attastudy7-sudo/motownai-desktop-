@@ -1,0 +1,644 @@
+/* Library page-scoped styles */
+
+/* ── REMOVE MAIN CONTENT PADDING FOR EDGE-TO-EDGE VSN BAR (desktop only) ── */
+@media (min-width: 1024px) {
+  .app-shell.with-desktop-side-nav .main-content {
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+    padding-top: 0 !important;
+  }
+}
+
+/* ── VSN BAR ── */
+.vsn-bar {
+  position: sticky;
+  top: 0;
+  z-index: 60;
+  background: var(--bg-card);
+  border-bottom: 1px solid var(--border);
+  margin: 0;
+}
+
+@media (max-width: 1023px) {
+  .vsn-bar {
+    top: var(--nav-h, 62px);
+    background: var(--bg-card) !important;
+    border-bottom: 1px solid var(--border) !important;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05) !important;
+    margin-bottom: 0;
+  }
+
+  .vsn-filters-wrap {
+    padding-bottom: 0.4rem;
+  }
+
+  .sp-header {
+    padding-top: 0.25rem;
+  }
+}
+
+/* Add mobile-specific vsn-pill style */
+@media (max-width: 768px) {
+  .vsn-pill {
+    background: var(--bg-secondary) !important;
+    border-radius: var(--radius-md) !important;
+  }
+  
+  [data-theme="dark"] .vsn-pill {
+    background: #1e2235 !important;
+  }
+}
+
+.vsn-inner {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.6rem 1.5rem;
+  max-width: 1160px;
+  margin: 0 auto;
+}
+
+.vsn-search-wrap {
+  width: 100%;
+  max-width: 680px;
+}
+
+.vsn-pill {
+  display: flex;
+  align-items: center;
+  background: var(--bg-secondary);
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  padding: 0 6px 0 18px;
+  transition: border-color 150ms ease-out, box-shadow 150ms ease-out, background 150ms ease-out;
+}
+
+.vsn-pill:focus-within {
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
+  background: var(--bg-card);
+}
+
+.vsn-pill-icon {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  flex-shrink: 0;
+  margin-right: 10px;
+  transition: color 0.2s;
+}
+
+.vsn-pill:focus-within .vsn-pill-icon {
+  color: var(--primary);
+}
+
+.vsn-pill-input {
+  all: unset;
+  flex: 1;
+  background: transparent !important;
+  border: none !important;
+  border-width: 0 !important;
+  outline: none !important;
+  box-shadow: none !important;
+  -webkit-appearance: none !important;
+  font-family: var(--font-body);
+  font-size: 0.95rem;
+  color: var(--text-primary);
+  padding: 11px 0;
+  min-width: 0;
+  cursor: text;
+}
+
+.vsn-pill-input::placeholder {
+  color: var(--text-muted);
+}
+
+.vsn-pill-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 38px;
+  height: 38px;
+  border: none;
+  border-radius: 50%;
+  cursor: pointer;
+  font-size: 0.85rem;
+  flex-shrink: 0;
+  transition: transform 150ms ease-out, opacity 150ms ease-out, background 150ms ease-out, box-shadow 150ms ease-out;
+}
+
+.vsn-pill-btn--go {
+  background: var(--primary);
+  color: #fff;
+  margin-left: 4px;
+  box-shadow: 0 2px 8px rgba(99, 102, 241, 0.35);
+}
+
+.vsn-pill-btn--go:hover {
+  opacity: 0.92;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .vsn-pill-btn--go:hover {
+    transform: scale(1.04);
+  }
+}
+
+.vsn-pill-btn--go:active {
+  transform: scale(0.96);
+}
+
+/* ── UNIFIED PAGE HEADER (Study Packs) ── */
+.sp-header {
+  padding: 2rem 0 1.75rem;
+  border-bottom: 1px solid var(--border);
+  margin-bottom: 1.5rem;
+}
+
+.sp-header__top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.sp-header__titles {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  min-width: 0;
+}
+
+.sp-header__title {
+  font-size: 1.75rem;
+  font-weight: 800;
+  color: var(--text-primary);
+  margin: 0;
+  line-height: 1.2;
+  white-space: nowrap;
+}
+
+.sp-header__count {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.2rem;
+  background: rgba(99, 102, 241, 0.1);
+  border: 1px solid rgba(99, 102, 241, 0.2);
+  color: #6366f1;
+  font-size: 0.72rem;
+  font-weight: 700;
+  padding: 0.2rem 0.65rem;
+  border-radius: 99px;
+  white-space: nowrap;
+  line-height: 1.4;
+}
+
+.sp-header__count span {
+  font-weight: 800;
+}
+
+.sp-header__desc {
+  font-size: 0.88rem;
+  color: var(--text-secondary);
+  margin: 0.6rem 0 0;
+  line-height: 1.5;
+  max-width: 580px;
+}
+
+/* Mobile: stack title, count, and button vertically */
+@media (max-width: 768px) {
+  .sp-header {
+    padding: 0.25rem 0 1.25rem;
+    margin-bottom: 1rem;
+  }
+
+  .sp-header__top {
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.35rem 0.75rem;
+  }
+
+  .sp-header__titles {
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.35rem 0.75rem;
+    flex: 1;
+    min-width: 0;
+  }
+
+  .sp-header__title {
+    font-size: 1.35rem;
+    white-space: normal;
+    line-height: 1.3;
+  }
+
+  .sp-header__count {
+    flex-basis: 100%;
+  }
+
+  .sp-header__create {
+    flex-shrink: 0;
+    width: auto;
+    margin-left: auto;
+    padding: 10px 16px;
+    border-radius: 10px;
+    font-size: 0.85rem;
+  }
+
+  .sp-header__desc {
+    font-size: 0.82rem;
+    margin-top: 0.35rem;
+  }
+}
+
+/* ── WRAPPER ── */
+.lib-wrap {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 1.25rem 5rem;
+  min-height: 100vh;
+}
+
+@media (min-width: 1024px) {
+  .lib-wrap {
+    padding: 0 3rem 3rem;
+  }
+}
+
+/* ── MARKETPLACE HERO ── */
+.lmh-hero {
+  padding: 2.5rem 0 1.5rem;
+  border-bottom: 1px solid var(--border);
+  margin-bottom: 2rem;
+}
+
+.lmh-hero-text {
+  margin-bottom: 1.25rem;
+}
+
+.lmh-headline {
+  font-size: 1.75rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin: 0 0 0.35rem;
+  line-height: 1.2;
+}
+
+.lmh-sub {
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+  margin: 0;
+  line-height: 1.5;
+}
+
+@media (max-width: 640px) {
+  .lmh-headline {
+    font-size: 1.4rem;
+  }
+
+  .lmh-hero {
+    padding: 1.5rem 0 1.25rem;
+  }
+}
+
+/* Mobile-specific adjustments */
+@media (max-width: 768px) {
+
+  /* Ensure the search row takes full width */
+  .lmh-search-row {
+    display: flex !important;
+    width: 100% !important;
+    gap: 0 !important;
+  }
+
+  /* 2. Make Search Box span full width and thinner */
+  .lmh-pill {
+    flex: 1 !important;
+    width: 100% !important;
+    height: 42px !important;
+    /* Thinner profile */
+    position: relative !important;
+    padding-right: 8px !important;
+  }
+
+  .lmh-pill-input {
+    font-size: 14px !important;
+    padding-right: 40px !important;
+    /* Make room for the button */
+  }
+
+  /* 3. Position the internal search button */
+  .lmh-internal-search-btn {
+    display: flex;
+    position: absolute;
+    right: 6px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: #6366f1;
+    /* Your primary brand color */
+    color: white;
+    border: none;
+    border-radius: var(--radius-sm);
+    width: 30px;
+    height: 30px;
+    border: 1px solid rgba(99, 102, 241, 0.2);
+    border-radius: 50%;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    z-index: 2;
+  }
+}
+
+/* Hide the internal button on Desktop */
+@media (min-width: 769px) {
+  .lmh-internal-search-btn {
+    display: none;
+  }
+}
+
+
+/* ── SEARCH + CREATE ROW ── */
+.lmh-search-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 1rem;
+}
+
+.lmh-pill {
+  display: flex;
+  align-items: center;
+  flex: 1;
+  background: var(--bg-secondary);
+  border: 1.5px solid var(--border);
+  border-radius: 999px;
+  padding: 0 16px;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.lmh-pill:focus-within {
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.10);
+  background: var(--bg-card);
+}
+
+.lmh-pill-icon {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  flex-shrink: 0;
+  margin-right: 10px;
+}
+
+.lmh-pill:focus-within .lmh-pill-icon {
+  color: var(--primary);
+}
+
+.lmh-pill-input {
+  all: unset;
+  flex: 1;
+  font-size: 0.95rem;
+  color: var(--text-primary);
+  padding: 11px 0;
+  min-width: 0;
+  cursor: text;
+}
+
+.lmh-pill-input::placeholder {
+  color: var(--text-muted);
+}
+
+.lmh-create-btn {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: var(--primary);
+  color: #fff;
+  border: none;
+  border-radius: 999px;
+  padding: 11px 20px;
+  font-size: 0.88rem;
+  font-weight: 600;
+  text-decoration: none;
+  white-space: nowrap;
+  cursor: pointer;
+  transition: opacity 0.15s, transform 0.15s;
+  flex-shrink: 0;
+}
+
+.lmh-create-btn:hover {
+  opacity: 0.88;
+  transform: scale(1.02);
+}
+
+/* Mobile: glass-like pill styling with border and backdrop */
+@media (max-width: 768px) {
+  .lmh-pill {
+    background: #ffffff !important;
+    border: 1.5px solid rgba(0, 0, 0, 0.12) !important;
+    border-radius: var(--radius-lg) !important;
+    padding: 6px 6px 6px 18px !important;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08) !important;
+    display: flex !important;
+    align-items: center !important;
+    width: 100% !important;
+    max-width: 100% !important;
+  }
+
+  [data-theme="dark"] .lmh-pill {
+    background: #1e202d !important;
+    border: 1px solid rgba(255, 255, 255, 0.1) !important;
+    box-shadow: 0 4px 24px rgba(0, 0, 0, 0.35) !important;
+  }
+
+  .lmh-pill:focus-within {
+    border-color: var(--primary) !important;
+    box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.22), 0 6px 24px rgba(0, 0, 0, 0.14) !important;
+  }
+
+  .lmh-pill-icon {
+    display: block !important;
+    color: var(--text-muted) !important;
+    font-size: 1rem !important;
+    margin-right: 10px !important;
+  }
+
+  .lmh-pill:focus-within .lmh-pill-icon {
+    color: var(--primary) !important;
+  }
+
+  .lmh-pill-input {
+    padding: 14px 0 !important;
+    background: transparent !important;
+    border: none !important;
+    color: var(--text-primary) !important;
+    font-size: 1rem !important;
+    flex: 1 !important;
+    min-width: 0 !important;
+  }
+
+  .lmh-pill-input::placeholder {
+    color: var(--text-muted) !important;
+  }
+
+  .lmh-pill-input:focus {
+    outline: none !important;
+  }
+
+  .lmh-create-btn {
+    background: var(--primary) !important;
+    border: none !important;
+    border-radius: var(--radius-md) !important;
+    padding: 12px 20px !important;
+    font-weight: 600 !important;
+    font-size: 0.95rem !important;
+    box-shadow: 0 4px 16px rgba(99, 102, 241, 0.38) !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    white-space: nowrap !important;
+    flex-shrink: 0 !important;
+  }
+
+  .lmh-create-btn:hover {
+    opacity: 0.92 !important;
+    transform: scale(1.03) !important;
+    box-shadow: 0 6px 20px rgba(99, 102, 241, 0.45) !important;
+  }
+
+  .lmh-create-btn:active {
+    transform: scale(0.97) !important;
+  }
+}
+
+/* ── SUBJECT FILTER CHIPS ── */
+.vsn-filters-wrap {
+  display: none;
+  padding: 0 1.5rem 0.8rem;
+  max-width: 1160px;
+  margin: 0 auto;
+}
+
+.vsn-filters-wrap.visible {
+  display: block;
+}
+
+.vsn-filters {
+  display: flex;
+  gap: 8px;
+  overflow-x: auto;
+  padding: 4px 0;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.vsn-filters::-webkit-scrollbar {
+  display: none;
+}
+
+.vsn-chip {
+  padding: 5px 12px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 500;
+  border: 1px solid var(--border);
+  background: var(--bg-card);
+  color: var(--text-secondary);
+  cursor: pointer;
+  white-space: nowrap;
+  transition: background 0.12s, color 0.12s, border-color 0.12s;
+  min-height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.vsn-chip:hover {
+  background: var(--bg-secondary);
+}
+
+.vsn-chip.active {
+  background: var(--primary);
+  color: #fff;
+  border-color: var(--primary);
+}
+
+/* ── SORT / FILTER CHIPS ── */
+.lmh-sort-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.lmh-sort-chip {
+  background: var(--bg-secondary);
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  padding: 6px 16px;
+  font-size: 0.82rem;
+  font-weight: 500;
+  color: var(--text-secondary);
+  cursor: pointer;
+  transition: border-color 0.15s, color 0.15s, background 0.15s;
+}
+
+.lmh-sort-chip:hover {
+  border-color: var(--primary);
+  color: var(--primary);
+}
+
+.lmh-sort-chip--active {
+  background: var(--primary);
+  border-color: var(--primary);
+  color: #fff;
+}
+
+.lmh-sort-chip--active:hover {
+  color: #fff;
+  opacity: 0.9;
+}
+
+/* ── EMPTY STATE ── */
+.sp-empty {
+  padding: 8rem 2rem;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1.25rem;
+  grid-column: 1 / -1;
+}
+
+.sp-empty-title {
+  font-size: 1.625rem;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+.sp-empty-desc {
+  font-size: 0.95rem;
+  color: var(--text-muted);
+  line-height: 1.6;
+  max-width: 400px;
+}
+
+/* Target mobile screens */
+@media (max-width: 768px) {
+
+  /* 2. Force the search row to be a single row */
+  .lmh-search-row {
+    display: flex !important;
+    width: 100% !important;
+    padding: 0 10px !important;
+  }
+
+  /* 3. Make the search pill expand to fill the width */
+  .lmh-pill {
+    flex: 1 !important;
+    width: 100% !important;
+    height: 40px !important;
+    /* Makes it thinner as requested */
+  }
+}
