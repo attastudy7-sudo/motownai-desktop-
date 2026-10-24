@@ -7,13 +7,14 @@ packs save themselves.
 
 ## Download
 
-Go to **[Releases](../../releases)** and download the installer from the newest release:
+Students download it from **[motownai.com/download](https://www.motownai.com/download)**, which
+always hands out the newest published release. The files are also on **[Releases](../../releases)**:
 
 - **Windows:** the `.exe` file (or the `.msi`)
 - **macOS:** the `.dmg` file
 
-The installers aren't code-signed yet, so Windows shows a SmartScreen warning the first time:
-click **More info**, then **Run anyway**.
+Until the installers are code-signed (see "Signing the installers" below), Windows shows a
+SmartScreen warning the first time: click **More info**, then **Run anyway**.
 
 ## What students need to know
 
@@ -93,6 +94,41 @@ GitHub Actions builds the Windows installer (`.exe` and `.msi`) and the macOS `.
 merge to `main` updates a draft release named after the version in `src-tauri/tauri.conf.json`;
 publish it from the Releases page to share the download link. Bump the version for a new
 release. Pull requests keep their installers as build artifacts on the Actions run.
+
+The installers carry the Motown AI name, logo and colours, and show a page with links to the
+Privacy Policy and Terms (`src-tauri/installer/terms.txt`) before installing. To redraw the
+installer pictures after a logo change:
+
+```bash
+python3 scripts/make-installer-art.py ../knowly ../motownai-mobile   # needs Pillow
+```
+
+## Signing the installers
+
+Windows SmartScreen and macOS Gatekeeper decide whether to warn by checking who signed the
+installer. The publisher name in the installer isn't enough on its own: the files have to be
+signed with a certificate issued to Motown AI. The build signs them as soon as these secrets
+are added under the repo's **Settings → Secrets and variables → Actions**; until then it builds
+unsigned installers and says so in a warning.
+
+**Windows**, one of:
+
+- *Azure Trusted Signing* (cheapest, about $10 a month, verifies the business or person):
+  `AZURE_SIGNING_ENDPOINT` (e.g. `https://eus.codesigning.azure.net`), `AZURE_SIGNING_ACCOUNT`,
+  `AZURE_SIGNING_PROFILE`, plus an app registration allowed to sign: `AZURE_CLIENT_ID`,
+  `AZURE_CLIENT_SECRET`, `AZURE_TENANT_ID`.
+- *A code-signing certificate* (OV or EV) from a certificate authority, exported as `.pfx`:
+  `WINDOWS_CERTIFICATE` (the `.pfx` file, base64-encoded) and `WINDOWS_CERTIFICATE_PASSWORD`.
+  Certificates issued since 2023 come on a hardware token or cloud HSM; ask the authority for
+  one you can export, or use their cloud signing service.
+
+Signed installers stop the "unknown publisher" message straight away. SmartScreen may still
+show its warning for a short while until enough people have installed the signed app.
+
+**macOS** (needs an Apple Developer account, $99 a year): `APPLE_CERTIFICATE` (the
+"Developer ID Application" certificate as a base64 `.p12`), `APPLE_CERTIFICATE_PASSWORD`,
+`APPLE_SIGNING_IDENTITY` (e.g. `Developer ID Application: Motown AI (TEAMID)`), and for
+notarization `APPLE_ID`, `APPLE_PASSWORD` (an app-specific password) and `APPLE_TEAM_ID`.
 
 
 ## Known limits

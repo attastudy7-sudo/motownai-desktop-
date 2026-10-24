@@ -35,14 +35,46 @@
     ],
     "windows": {
       "nsis": {
-        "installMode": "currentUser"
+        "installMode": "currentUser",
+        "headerImage": "installer/nsis-header.bmp",
+        "sidebarImage": "installer/nsis-sidebar.bmp",
+        "installerIcon": "icons/icon.ico",
+        "uninstallerIcon": "icons/icon.ico",
+        "uninstallerHeaderImage": "installer/nsis-header.bmp"
       },
       "webviewInstallMode": {
         "type": "downloadBootstrapper"
-      }
+      },
+      "wix": {
+        "bannerPath": "installer/msi-banner.bmp",
+        "dialogImagePath": "installer/msi-dialog.bmp"
+      },
+      "digestAlgorithm": "sha256",
+      "timestampUrl": "http://timestamp.digicert.com"
     },
     "resources": {
       "../bundle/static/": "static/"
+    },
+    "homepage": "https://www.motownai.com",
+    "copyright": "© 2026 Motown AI",
+    "licenseFile": "installer/terms.txt",
+    "macOS": {
+      "dmg": {
+        "background": "installer/dmg-background.png",
+        "windowSize": {
+          "width": 660,
+          "height": 400
+        },
+        "appPosition": {
+          "x": 180,
+          "y": 220
+        },
+        "applicationFolderPosition": {
+          "x": 480,
+          "y": 220
+        }
+      },
+      "minimumSystemVersion": "10.15"
     }
   }
 }

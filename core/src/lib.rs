@@ -34,7 +34,7 @@ pub struct Config {
     /// The web app's static files shipped with the installer (`bundle/static`), so screens draw
     /// before the app has ever been online. None = fetch everything from the server.
     pub bundle_dir: Option<PathBuf>,
-    /// Port to listen on; 0 picks a free one.
+    /// Port to listen on; 0 = the port this app used last time (picked once, then remembered).
     pub port: u16,
     /// Shared secret the window must present (as a cookie) on every request, so other programs
     /// on this computer can't use the student's session through the local port. None = no check
