@@ -49,7 +49,10 @@ The rest of this page is for developers.
 - Libraries the site loads from CDNs (icons, maths rendering) are saved too, so pages keep
   their icons offline.
 - **Ships with the site's files.** The installer carries the web app's CSS, JS, fonts and images
-  (`bundle/static`), so screens draw straight from the install. On a computer that has never
+  (`bundle/static`), used when a file isn't saved yet and the app is offline. Online, a file
+  not saved yet comes from motownai.com (the bundled copy is matched by path, so for a new
+  `?v=` it would be stale), and saved files are re-checked in the background every 5 minutes,
+  so an edit to an unversioned file shows up by the next load. On a computer that has never
   been online, the app opens on a welcome screen that asks to connect once to sign in, then
   moves on by itself when the connection appears.
 - Signing out deletes the student's saved data from the computer.
@@ -81,8 +84,9 @@ MOTOWN_UPSTREAM=http://127.0.0.1:5000 cargo run -p motown-core --bin motown-loca
 scripts/update-static.sh ../knowly     # copies knowly/app/static into bundle/static
 ```
 
-Run it before a release when the website's CSS/JS has changed a lot. It only matters for fresh
-installs: while online, the app refreshes these files from motownai.com by itself.
+Run it before a release when the website's CSS/JS has changed a lot. It only matters for
+computers that open the app offline before it has saved those files: while online, the app gets
+them from motownai.com by itself.
 
 ## Build installers
 
