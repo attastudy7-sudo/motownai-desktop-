@@ -1,9 +1,28 @@
 # Motown AI desktop
 
-Motown AI for laptops. The window shows the real web app (the same pages, styles and scripts as
-motownai.com), and every study pack the student owns is saved on their computer, so it opens
-and works offline. There is no "download for offline" button: packs save themselves in the
-background, including new ones as soon as they're made.
+Motown AI for laptops: the same Motown AI students use on motownai.com, as an app they install
+on Windows or macOS. Every study pack they own, including ones they make, is kept on their
+computer, so it opens and works without internet. There's no "download for offline" button;
+packs save themselves.
+
+## Download
+
+Go to **[Releases](../../releases)** and download the installer from the newest release:
+
+- **Windows:** the `.exe` file (or the `.msi`)
+- **macOS:** the `.dmg` file
+
+The installers aren't code-signed yet, so Windows shows a SmartScreen warning the first time:
+click **More info**, then **Run anyway**.
+
+## What students need to know
+
+- Sign in once with internet. After that the app opens without internet, with every pack ready.
+- Anything done offline (answers, finished sections, notes) syncs when the internet comes back.
+- Making new packs, chat replies, Discover and payments still need internet, because the AI and
+  the accounts live on motownai.com.
+
+The rest of this page is for developers.
 
 ## How it works
 
@@ -70,11 +89,11 @@ installs: while online, the app refreshes these files from motownai.com by itsel
 npm run build          # installers in target/release/bundle/
 ```
 
-GitHub Actions builds the Windows installer (`.exe` and `.msi`) and the macOS `.dmg` on every
-push. Pushing a tag like `v0.1.0` creates a draft GitHub release with them attached.
+GitHub Actions builds the Windows installer (`.exe` and `.msi`) and the macOS `.dmg`. Every
+merge to `main` updates a draft release named after the version in `src-tauri/tauri.conf.json`;
+publish it from the Releases page to share the download link. Bump the version for a new
+release. Pull requests keep their installers as build artifacts on the Actions run.
 
-The installers aren't code-signed yet, so Windows SmartScreen will warn on first run
-("More info" → "Run anyway") until a signing certificate is added.
 
 ## Known limits
 
