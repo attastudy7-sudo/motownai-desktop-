@@ -34,6 +34,11 @@ jobs:
           - os: macos-latest
             args: "--target universal-apple-darwin"
     runs-on: ${{ matrix.os }}
+    env:
+      # Only used by Azure Trusted Signing (see "Set up Windows signing").
+      AZURE_CLIENT_ID: ${{ secrets.AZURE_CLIENT_ID }}
+      AZURE_CLIENT_SECRET: ${{ secrets.AZURE_CLIENT_SECRET }}
+      AZURE_TENANT_ID: ${{ secrets.AZURE_TENANT_ID }}
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
@@ -45,6 +50,59 @@ jobs:
           targets: ${{ matrix.os == 'macos-latest' && 'aarch64-apple-darwin,x86_64-apple-darwin' || '' }}
       - uses: Swatinem/rust-cache@v2
       - run: npm ci
+      # Code signing. Each block does nothing until its secrets are added in the repo's
+      # Settings > Secrets and variables > Actions (see "Signing the installers" in the README),
+      # so unsigned builds keep working in the meantime.
+      - name: Set up Windows signing
+        if: runner.os == 'Windows'
+        shell: pwsh
+        env:
+          WINDOWS_CERTIFICATE: ${{ secrets.WINDOWS_CERTIFICATE }}
+          WINDOWS_CERTIFICATE_PASSWORD: ${{ secrets.WINDOWS_CERTIFICATE_PASSWORD }}
+          AZURE_SIGNING_ENDPOINT: ${{ secrets.AZURE_SIGNING_ENDPOINT }}
+          AZURE_SIGNING_ACCOUNT: ${{ secrets.AZURE_SIGNING_ACCOUNT }}
+          AZURE_SIGNING_PROFILE: ${{ secrets.AZURE_SIGNING_PROFILE }}
+        run: |
+          $conf = 'src-tauri/tauri.conf.json'
+          $json = Get-Content $conf -Raw | ConvertFrom-Json
+          if ($env:WINDOWS_CERTIFICATE) {
+            # A .pfx certificate (OV or EV from a certificate authority), stored base64-encoded.
+            $pfx = Join-Path $env:RUNNER_TEMP 'cert.pfx'
+            [IO.File]::WriteAllBytes($pfx, [Convert]::FromBase64String($env:WINDOWS_CERTIFICATE))
+            $pw = ConvertTo-SecureString $env:WINDOWS_CERTIFICATE_PASSWORD -AsPlainText -Force
+            $cert = Import-PfxCertificate -FilePath $pfx -CertStoreLocation Cert:\CurrentUser\My -Password $pw
+            Remove-Item $pfx
+            $json.bundle.windows | Add-Member -Force certificateThumbprint $cert.Thumbprint
+            Write-Host "Signing with certificate for $($cert.Subject)"
+          } elseif ($env:AZURE_SIGNING_ENDPOINT) {
+            # Azure Trusted Signing; needs AZURE_CLIENT_ID, AZURE_CLIENT_SECRET, AZURE_TENANT_ID too.
+            cargo install trusted-signing-cli --locked
+            $cmd = "trusted-signing-cli -e $env:AZURE_SIGNING_ENDPOINT -a $env:AZURE_SIGNING_ACCOUNT -c $env:AZURE_SIGNING_PROFILE -d `"Motown AI`" %1"
+            $json.bundle.windows | Add-Member -Force signCommand $cmd
+            Write-Host "Signing with Azure Trusted Signing"
+          } else {
+            Write-Host "::warning::No Windows signing secrets set; the installers will be unsigned and SmartScreen will warn."
+            exit 0
+          }
+          $json | ConvertTo-Json -Depth 20 | Set-Content $conf -Encoding utf8
+      - name: Set up macOS signing
+        if: runner.os == 'macOS'
+        env:
+          APPLE_CERTIFICATE: ${{ secrets.APPLE_CERTIFICATE }}
+          APPLE_CERTIFICATE_PASSWORD: ${{ secrets.APPLE_CERTIFICATE_PASSWORD }}
+          APPLE_SIGNING_IDENTITY: ${{ secrets.APPLE_SIGNING_IDENTITY }}
+          APPLE_ID: ${{ secrets.APPLE_ID }}
+          APPLE_PASSWORD: ${{ secrets.APPLE_PASSWORD }}
+          APPLE_TEAM_ID: ${{ secrets.APPLE_TEAM_ID }}
+        run: |
+          if [ -z "$APPLE_CERTIFICATE" ]; then
+            echo "::warning::No Apple signing secrets set; macOS will say the app is from an unidentified developer."
+            exit 0
+          fi
+          # Tauri signs and notarizes when these are in the environment.
+          for v in APPLE_CERTIFICATE APPLE_CERTIFICATE_PASSWORD APPLE_SIGNING_IDENTITY APPLE_ID APPLE_PASSWORD APPLE_TEAM_ID; do
+            [ -n "${!v}" ] && { echo "$v<<__END__"; echo "${!v}"; echo "__END__"; } >> "$GITHUB_ENV"
+          done
       # Every push to main (and any v* tag) updates a draft GitHub release for the app's version
       # with the installers attached; pull requests keep them as build artifacts.
       - name: Build (release)

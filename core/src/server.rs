@@ -35,7 +35,7 @@ pub struct Started {
 }
 
 pub async fn serve(app: Arc<App>, port: u16) -> anyhow::Result<Started> {
-    let listener = tokio::net::TcpListener::bind(("127.0.0.1", port)).await?;
+    let listener = bind(&app, port).await?;
     let addr = listener.local_addr()?;
     let boot_url = match &app.secret {
         Some(s) => format!("http://{addr}/__desktop/boot?k={s}"),
@@ -49,6 +49,27 @@ pub async fn serve(app: Arc<App>, port: u16) -> anyhow::Result<Started> {
     });
     tracing::info!("listening on http://{addr}");
     Ok(Started { addr, boot_url })
+}
+
+/// The window's storage (the site's settings, which tutorials were seen, the website's own
+/// offline data) belongs to the page's address, port included. So the app keeps the same port
+/// from one launch to the next: the one it used last time, or a free one picked once and
+/// remembered. Only if that port is taken by something else does it move.
+async fn bind(app: &App, port: u16) -> anyhow::Result<tokio::net::TcpListener> {
+    if port != 0 {
+        return Ok(tokio::net::TcpListener::bind(("127.0.0.1", port)).await?);
+    }
+    let file = app.data_dir.join("port");
+    let remembered = std::fs::read_to_string(&file).ok().and_then(|s| s.trim().parse::<u16>().ok());
+    if let Some(p) = remembered {
+        if let Ok(l) = tokio::net::TcpListener::bind(("127.0.0.1", p)).await {
+            return Ok(l);
+        }
+        tracing::warn!("port {p} is in use; picking another (site settings in the window start fresh)");
+    }
+    let l = tokio::net::TcpListener::bind(("127.0.0.1", 0)).await?;
+    let _ = std::fs::write(&file, l.local_addr()?.port().to_string());
+    Ok(l)
 }
 
 async fn handle(State(app): State<Arc<App>>, req: Request) -> Response {

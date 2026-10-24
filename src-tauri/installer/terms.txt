@@ -1,0 +1,15 @@
+Motown AI for desktop
+Published by Motown AI - https://www.motownai.com
+
+Before you install, please read how Motown AI handles your information and the terms of using it:
+
+  Privacy Policy:   https://www.motownai.com/privacy
+  Terms of Service: https://www.motownai.com/terms
+  Refund Policy:    https://www.motownai.com/refund
+
+What this app keeps on your computer
+This app saves your study packs, your progress and your sign-in on this computer so you can keep studying without an internet connection. It is stored in your own user folder and is removed if you uninstall the app and delete its data. Progress you make offline is sent to your Motown AI account the next time you are online.
+
+By installing and using Motown AI you agree to the Terms of Service and the Privacy Policy above.
+
+Questions: support@motownai.com
