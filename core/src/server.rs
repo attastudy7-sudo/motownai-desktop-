@@ -251,6 +251,9 @@ fn savable_type(ct: &str) -> bool {
         || ct.starts_with("text/plain")
 }
 
+/// How old a saved static file can get before it's refreshed in the background.
+const STATIC_REFRESH_SECS: i64 = 5 * 60;
+
 fn is_static(path: &str) -> bool {
     path.starts_with("/static/") || path == "/favicon.ico"
 }
@@ -260,11 +263,11 @@ async fn get(app: Arc<App>, req: Request, pq: String) -> Response {
     let key = cache_key(&pq, req.headers());
     let wants_html = accepts_html(req.headers());
 
-    // Static files rarely change and carry ?v= when they do: serve the saved copy at once and
-    // refresh it in the background now and then.
+    // Static files: serve the saved copy at once, and refresh it in the background so an edit
+    // to a file the site doesn't version (no ?v=) shows up by the next load, not hours later.
     if is_static(&path) {
         if let Some(saved) = app.store.get(&key) {
-            if now() - saved.fetched_at > 6 * 3600 && app.is_online() {
+            if now() - saved.fetched_at > STATIC_REFRESH_SECS && app.is_online() {
                 let (app, pq) = (app.clone(), pq.clone());
                 tokio::spawn(async move {
                     let _ = fetch_and_save(&app, &pq).await;
@@ -272,16 +275,13 @@ async fn get(app: Arc<App>, req: Request, pq: String) -> Response {
             }
             return from_saved(saved, false);
         }
-        // Not saved yet: use the copy that came with the installer, and save the server's
-        // current one in the background.
-        if let Some(r) = bundled(&app, &path) {
-            if app.is_online() {
-                let (app, pq) = (app.clone(), pq.clone());
-                tokio::spawn(async move {
-                    let _ = fetch_and_save(&app, &pq).await;
-                });
+        // Not saved yet. Online, ask the site: the installer's copy is matched by path alone, so
+        // for a new ?v= it would be the old file. Offline, the installer's copy beats nothing
+        // (offline_get falls back to it too, if the request below fails).
+        if !app.is_online() {
+            if let Some(r) = bundled(&app, &path) {
+                return r;
             }
-            return r;
         }
     }
 
