@@ -1,0 +1,28 @@
+[package]
+name = "motown-core"
+version = "0.1.0"
+edition = "2021"
+description = "Local server behind the Motown AI desktop app: talks to motownai.com, keeps every pack on disk, works offline."
+
+[dependencies]
+anyhow = "1"
+axum = "0.8"
+bytes = "1"
+cookie_store = "0.22"
+futures-util = "0.3"
+rand = "0.9"
+regex = "1"
+reqwest = { version = "0.13", default-features = false, features = ["rustls", "cookies", "gzip", "brotli", "deflate", "stream", "json"] }
+reqwest_cookie_store = "0.10"
+rusqlite = { version = "0.37", features = ["bundled"] }
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+tokio = { version = "1", features = ["full"] }
+tracing = "0.1"
+tracing-subscriber = { version = "0.3", features = ["env-filter"] }
+url = "2"
+open = "5"
+
+[[bin]]
+name = "motown-local"
+path = "src/bin/motown-local.rs"

@@ -1,0 +1,22 @@
+[package]
+name = "motownai-desktop"
+version = "0.1.0"
+description = "Motown AI for Windows and macOS: the web app, with every pack saved on your computer."
+edition = "2021"
+
+[lib]
+name = "motownai_desktop_lib"
+crate-type = ["staticlib", "cdylib", "rlib"]
+
+[build-dependencies]
+tauri-build = { version = "2", features = [] }
+
+[dependencies]
+motown-core = { path = "../core" }
+tauri = { version = "2", features = [] }
+tauri-plugin-single-instance = "2"
+tokio = { version = "1", features = ["rt-multi-thread", "macros"] }
+tracing = "0.1"
+tracing-subscriber = { version = "0.3", features = ["env-filter"] }
+url = "2"
+open = "5"
