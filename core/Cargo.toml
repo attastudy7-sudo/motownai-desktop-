@@ -1,6 +1,6 @@
 [package]
 name = "motown-core"
-version = "0.1.0"
+version = "0.1.1"
 edition = "2021"
 description = "Local server behind the Motown AI desktop app: talks to motownai.com, keeps every pack on disk, works offline."
 

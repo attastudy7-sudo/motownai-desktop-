@@ -91,8 +91,10 @@ npm run build          # installers in target/release/bundle/
 
 GitHub Actions builds the Windows installer (`.exe` and `.msi`) and the macOS `.dmg`. Every
 merge to `main` updates a draft release named after the version in `src-tauri/tauri.conf.json`;
-publish it from the Releases page to share the download link. Bump the version for a new
-release. Pull requests keep their installers as build artifacts on the Actions run.
+publish it from the Releases page to share the download link (motownai.com/download always
+hands out the newest published one). A published release is never rebuilt, so bump the version
+(in `tauri.conf.json`, both `Cargo.toml`s and `package.json`) before merging changes meant for a
+new release. Pull requests keep their installers as build artifacts on the Actions run.
 
 
 ## Known limits

@@ -3,7 +3,6 @@ name: Build
 on:
   push:
     branches: [main]
-    tags: ["v*"]
   pull_request:
   workflow_dispatch:
 
@@ -45,10 +44,10 @@ jobs:
           targets: ${{ matrix.os == 'macos-latest' && 'aarch64-apple-darwin,x86_64-apple-darwin' || '' }}
       - uses: Swatinem/rust-cache@v2
       - run: npm ci
-      # Every push to main (and any v* tag) updates a draft GitHub release for the app's version
+      # Every push to main updates a draft GitHub release for the app's version
       # with the installers attached; pull requests keep them as build artifacts.
       - name: Build (release)
-        if: github.event_name == 'push' && (github.ref == 'refs/heads/main' || startsWith(github.ref, 'refs/tags/v'))
+        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
         uses: tauri-apps/tauri-action@v0
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -59,10 +58,10 @@ jobs:
           releaseDraft: true
           args: ${{ matrix.args }}
       - name: Build
-        if: "!(github.event_name == 'push' && (github.ref == 'refs/heads/main' || startsWith(github.ref, 'refs/tags/v')))"
+        if: "!(github.event_name == 'push' && github.ref == 'refs/heads/main')"
         run: npx tauri build ${{ matrix.args }}
       - uses: actions/upload-artifact@v4
-        if: "!(github.event_name == 'push' && (github.ref == 'refs/heads/main' || startsWith(github.ref, 'refs/tags/v')))"
+        if: "!(github.event_name == 'push' && github.ref == 'refs/heads/main')"
         with:
           name: motown-ai-${{ matrix.os }}
           path: |

@@ -1,6 +1,6 @@
 [package]
 name = "motownai-desktop"
-version = "0.1.0"
+version = "0.1.1"
 description = "Motown AI for Windows and macOS: the web app, with every pack saved on your computer."
 edition = "2021"
 
