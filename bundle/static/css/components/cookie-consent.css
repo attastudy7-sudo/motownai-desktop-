@@ -1,0 +1,202 @@
+/* ── GDPR Cookie Consent Banner ── */
+#cc-banner {
+  position: fixed;
+  bottom: 20px;
+  left: 20px;
+  z-index: 2000;
+  width: 340px;
+  max-width: calc(100vw - 40px);
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-modal);
+  padding: 16px 18px;
+  font-family: var(--font-body);
+  color: var(--text-primary);
+  transform: translateY(120%);
+  opacity: 0;
+  transition: transform 350ms var(--anim-ease-out), opacity 250ms ease;
+  pointer-events: none;
+}
+#cc-banner.cc-visible {
+  transform: translateY(0);
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.cc-text {
+  font-size: var(--text-small);
+  line-height: 1.5;
+  color: var(--text-secondary);
+  margin-bottom: 12px;
+}
+
+.cc-text a {
+  color: var(--primary);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+.cc-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.cc-btn {
+  padding: 7px 16px;
+  border-radius: var(--radius-sm);
+  font-family: var(--font-body);
+  font-size: var(--text-small);
+  font-weight: var(--weight-semibold);
+  cursor: pointer;
+  border: none;
+  transition: background var(--transition-fast);
+}
+
+.cc-btn-accept {
+  background: var(--primary);
+  color: #fff;
+}
+.cc-btn-accept:hover { opacity: 0.85; }
+
+.cc-btn-decline {
+  background: transparent;
+  color: var(--text-secondary);
+  border: 1px solid var(--border);
+}
+.cc-btn-decline:hover {
+  background: var(--bg-secondary);
+  color: var(--text-primary);
+}
+
+.cc-details-toggle {
+  margin-left: auto;
+  background: none;
+  border: none;
+  color: var(--text-secondary);
+  font-size: var(--text-caption);
+  font-family: var(--font-body);
+  cursor: pointer;
+  padding: 4px 0;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+.cc-details-toggle:hover { color: var(--text-primary); }
+
+/* Expandable details panel */
+.cc-details {
+  display: none;
+  margin-top: 12px;
+  padding-top: 12px;
+  border-top: 1px solid var(--border);
+}
+
+.cc-details.cc-open { display: block; }
+
+.cc-cat {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 6px 0;
+}
+
+.cc-cat-label {
+  font-size: var(--text-caption);
+  font-weight: var(--weight-medium);
+  color: var(--text-primary);
+}
+
+/* Tiny toggle */
+.cc-toggle {
+  position: relative;
+  width: 32px;
+  height: 18px;
+  flex-shrink: 0;
+}
+
+.cc-toggle input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+  position: absolute;
+}
+
+.cc-toggle-track {
+  position: absolute;
+  inset: 0;
+  background: var(--border);
+  border-radius: 18px;
+  cursor: pointer;
+  transition: background var(--transition-fast);
+}
+
+.cc-toggle-track::before {
+  content: '';
+  position: absolute;
+  left: 2px;
+  top: 2px;
+  width: 14px;
+  height: 14px;
+  background: #fff;
+  border-radius: 50%;
+  transition: transform var(--transition-fast);
+}
+
+.cc-toggle input:checked + .cc-toggle-track {
+  background: var(--primary);
+}
+
+.cc-toggle input:checked + .cc-toggle-track::before {
+  transform: translateX(14px);
+}
+
+.cc-toggle input:disabled + .cc-toggle-track {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* Re-open pill */
+.cc-manage-link {
+  position: fixed;
+  bottom: 20px;
+  left: 20px;
+  z-index: 2000;
+  display: none;
+}
+
+.cc-manage-link a {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 6px 12px;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-pill);
+  color: var(--text-secondary);
+  font-size: var(--text-caption);
+  font-family: var(--font-body);
+  text-decoration: none;
+  box-shadow: var(--shadow-sm);
+  transition: background var(--transition-fast);
+}
+
+.cc-manage-link a:hover {
+  background: var(--bg-secondary);
+  color: var(--text-primary);
+}
+
+/* Mobile */
+@media (max-width: 640px) {
+  #cc-banner {
+    bottom: 0;
+    left: 0;
+    right: 0;
+    width: 100%;
+    max-width: 100%;
+    border-radius: var(--radius-md) var(--radius-md) 0 0;
+    padding: 14px 16px;
+  }
+  .cc-row { flex-wrap: wrap; }
+  .cc-details-toggle { margin-left: 0; margin-top: 4px; }
+}

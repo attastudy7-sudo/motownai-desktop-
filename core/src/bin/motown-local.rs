@@ -16,6 +16,7 @@ async fn main() -> anyhow::Result<()> {
         data_dir,
         port,
         secret: None,
+        bundle_dir: Some(std::path::Path::new(env!("CARGO_MANIFEST_DIR")).join("../bundle/static")),
     })
     .await?;
     println!("Motown AI (local) on {}", started.boot_url);

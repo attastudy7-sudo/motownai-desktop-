@@ -31,6 +31,9 @@ pub struct Config {
     pub upstream: Url,
     /// The app's data folder: the database and the sign-in cookies go here.
     pub data_dir: PathBuf,
+    /// The web app's static files shipped with the installer (`bundle/static`), so screens draw
+    /// before the app has ever been online. None = fetch everything from the server.
+    pub bundle_dir: Option<PathBuf>,
     /// Port to listen on; 0 picks a free one.
     pub port: u16,
     /// Shared secret the window must present (as a cookie) on every request, so other programs
@@ -68,6 +71,7 @@ pub struct App {
     pub kick: Notify,
     pub saving: Progress,
     pub secret: Option<String>,
+    pub bundle_dir: Option<PathBuf>,
 }
 
 impl App {
@@ -95,6 +99,7 @@ impl App {
             kick: Notify::new(),
             saving: Progress::default(),
             secret: cfg.secret.clone(),
+            bundle_dir: cfg.bundle_dir.clone(),
         }))
     }
 

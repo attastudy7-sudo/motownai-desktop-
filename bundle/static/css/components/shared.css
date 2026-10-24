@@ -1,0 +1,384 @@
+/* ── Shared Design System Components ── */
+/* ds-* classes mirror the patterns in .impeccable/design.json */
+/* Consume global tokens from style.css: --btn-bg, --btn-text, --bg-card, --border, etc. */
+
+/* ═══════════════════════════════════════════
+   BUTTONS
+   ═══════════════════════════════════════════ */
+.ds-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--spacing-sm);
+  padding: 0.75rem 0.5rem;
+  border: 1px solid transparent;
+  border-radius: var(--radius-md);
+  font-family: var(--font-body);
+  font-size: 0.875rem;
+  font-weight: 600;
+  line-height: 1.4;
+  cursor: pointer;
+  text-decoration: none;
+  transition: background var(--anim-dur-micro) ease,
+              color var(--anim-dur-micro) ease,
+              transform var(--anim-dur-micro) var(--anim-ease-out),
+              box-shadow var(--anim-dur-micro) ease;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+}
+.ds-btn:active {
+  transform: scale(0.97);
+}
+.ds-btn:disabled {
+  opacity: 0.5;
+  pointer-events: none;
+}
+
+.ds-btn-primary {
+  background: var(--btn-bg);
+  color: var(--btn-text);
+  border-color: var(--btn-border);
+  box-shadow: var(--shadow-sm);
+}
+.ds-btn-primary:hover {
+  background: var(--btn-hover-bg);
+  color: var(--btn-text);
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-card-hover);
+}
+
+.ds-btn-secondary {
+  background: transparent;
+  color: var(--text-primary);
+  border-color: var(--border);
+}
+.ds-btn-secondary:hover {
+  background: var(--bg-hover);
+  border-color: var(--primary);
+  color: var(--primary);
+}
+
+.ds-btn-ghost {
+  background: transparent;
+  color: var(--text-secondary);
+  border-color: transparent;
+}
+.ds-btn-ghost:hover {
+  background: var(--primary-soft);
+  color: var(--primary);
+}
+
+.ds-btn-danger {
+  background: var(--danger);
+  color: #fff;
+  border-color: transparent;
+}
+.ds-btn-danger:hover {
+  background: #dc2626;
+}
+
+.ds-btn-sm {
+  padding: 0.375rem var(--spacing-md);
+  font-size: 0.8125rem;
+}
+
+.ds-btn-lg {
+  padding: var(--spacing-md) var(--spacing-xl);
+  font-size: 1rem;
+}
+
+.ds-btn-block {
+  width: 100%;
+}
+
+/* Loading state */
+.ds-btn-loading {
+  position: relative;
+  pointer-events: none;
+  color: transparent !important;
+}
+.ds-btn-loading > * {
+  opacity: 0;
+}
+.ds-btn-loading::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  margin: auto;
+  width: 1.15em;
+  height: 1.15em;
+  border-radius: 50%;
+  border: 2.5px solid rgba(255, 255, 255, 0.35);
+  border-top-color: #fff;
+  animation: _dsSpin 0.65s linear infinite;
+}
+@keyframes _dsSpin {
+  to { transform: rotate(360deg); }
+}
+
+/* ═══════════════════════════════════════════
+   CARDS
+   ═══════════════════════════════════════════ */
+.ds-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-card);
+  transition: border-color 180ms var(--anim-ease-out),
+              transform 180ms var(--anim-ease-out),
+              box-shadow 180ms var(--anim-ease-out);
+}
+.ds-card:hover {
+  border-color: var(--border-hover);
+}
+
+.ds-card-flat {
+  box-shadow: none;
+}
+
+.ds-card-elevated {
+  box-shadow: var(--shadow-card-hover);
+}
+
+.ds-card-interactive {
+  cursor: pointer;
+}
+.ds-card-interactive:hover {
+  transform: translateY(-2px);
+  border-color: var(--border-hover);
+  box-shadow: var(--shadow-card-hover);
+}
+
+/* ═══════════════════════════════════════════
+   TEXT INPUTS
+   ═══════════════════════════════════════════ */
+.ds-input {
+  width: 100%;
+  padding: var(--spacing-sm) var(--spacing-md);
+  background: var(--bg-page);
+  border: 1.5px solid var(--border);
+  border-radius: var(--radius-md);
+  font-family: var(--font-body);
+  font-size: 0.9375rem;
+  color: var(--text-primary);
+  outline: none;
+  transition: border-color var(--anim-dur-micro) ease,
+              box-shadow var(--anim-dur-micro) ease;
+}
+.ds-input::placeholder {
+  color: var(--text-muted);
+}
+.ds-input:focus {
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px var(--primary-glow);
+}
+.ds-input--error {
+  border-color: var(--danger);
+}
+.ds-input--error:focus {
+  box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.10);
+}
+.ds-input--disabled {
+  opacity: 0.5;
+  pointer-events: none;
+}
+
+.ds-textarea {
+  resize: vertical;
+  min-height: 100px;
+}
+
+/* ═══════════════════════════════════════════
+   CHIPS / PILLS
+   ═══════════════════════════════════════════ */
+.ds-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 14px;
+  border: 1.5px solid var(--border);
+  border-radius: var(--radius-pill);
+  font-family: var(--font-body);
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+  background: transparent;
+  cursor: default;
+  transition: border-color 150ms ease,
+              background 150ms ease,
+              color 150ms ease;
+  user-select: none;
+}
+.ds-chip:hover {
+  border-color: var(--border-hover);
+}
+.ds-chip--interactive {
+  cursor: pointer;
+}
+.ds-chip--selected {
+  background: var(--primary-soft);
+  border-color: var(--primary);
+  color: var(--primary);
+}
+.ds-chip--selected:hover {
+  background: var(--primary-soft);
+  border-color: var(--primary);
+}
+
+/* ═══════════════════════════════════════════
+   BADGES
+   ═══════════════════════════════════════════ */
+.ds-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 18px;
+  height: 18px;
+  padding: 0 5px;
+  border-radius: var(--radius-pill);
+  font-size: 0.65rem;
+  font-weight: 800;
+  line-height: 1;
+  letter-spacing: 0.02em;
+  color: #fff;
+  background: var(--danger);
+  pointer-events: none;
+}
+.ds-badge--primary {
+  background: var(--primary);
+}
+.ds-badge--success {
+  background: var(--success);
+}
+.ds-badge--muted {
+  background: var(--text-muted);
+}
+
+/* ═══════════════════════════════════════════
+   NAV ICON BUTTON (44×44 touch target)
+   ═══════════════════════════════════════════ */
+.ds-nav-icon-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  min-width: 44px;
+  min-height: 44px;
+  border-radius: var(--radius-sm);
+  font-size: 0.875rem;
+  color: var(--text-muted);
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  text-decoration: none;
+  transition: background var(--anim-dur-micro) ease,
+              color var(--anim-dur-micro) ease,
+              transform var(--anim-dur-micro) var(--anim-ease-out);
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+}
+.ds-nav-icon-btn:hover {
+  background: var(--primary-soft);
+  color: var(--primary);
+  transform: translateY(-1px);
+}
+.ds-nav-icon-btn:active {
+  transform: scale(0.92);
+}
+.ds-nav-icon-btn--active {
+  color: var(--primary);
+}
+
+/* ═══════════════════════════════════════════
+   PROGRESS BAR
+   ═══════════════════════════════════════════ */
+.ds-progress {
+  height: 4px;
+  background: var(--border);
+  border-radius: 2px;
+  overflow: hidden;
+}
+.ds-progress__fill {
+  height: 100%;
+  border-radius: 2px;
+  background: var(--primary);
+  transform-origin: left center;
+  transition: transform 500ms var(--anim-ease-out);
+}
+.ds-progress__fill--success {
+  background: var(--success);
+}
+
+/* ═══════════════════════════════════════════
+   DIVIDER
+   ═══════════════════════════════════════════ */
+.ds-divider {
+  height: 1px;
+  background: var(--border);
+  border: none;
+  margin: var(--spacing-lg) 0;
+}
+.ds-divider--light {
+  background: var(--border-light);
+}
+.ds-divider--hard {
+  background: var(--border-hover);
+}
+
+/* ═══════════════════════════════════════════
+   SKELETON (shimmer placeholder)
+   ═══════════════════════════════════════════ */
+.ds-skeleton {
+  background: var(--bg-hover);
+  border-radius: var(--radius-sm);
+  animation: _dsShimmer 1.6s ease-in-out infinite;
+  background-image: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(255,255,255,0.06) 40%,
+    rgba(255,255,255,0.10) 50%,
+    rgba(255,255,255,0.06) 60%,
+    transparent 100%
+  );
+  background-size: 500px 100%;
+  background-repeat: no-repeat;
+}
+@keyframes _dsShimmer {
+  0%   { background-position: -500px 0; }
+  100% { background-position:  500px 0; }
+}
+
+[data-theme="light"] .ds-skeleton {
+  background-image: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(0,0,0,0.035) 40%,
+    rgba(0,0,0,0.07) 50%,
+    rgba(0,0,0,0.035) 60%,
+    transparent 100%
+  );
+}
+
+/* ═══════════════════════════════════════════
+   TOAST (transient notification)
+   ═══════════════════════════════════════════ */
+.ds-toast {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 20px;
+  border-radius: var(--radius-md);
+  font-size: 0.88rem;
+  font-weight: 600;
+  line-height: 1.4;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow-modal);
+  color: var(--text-primary);
+  animation: _dsToastIn 0.3s var(--anim-ease-out) forwards;
+}
+@keyframes _dsToastIn {
+  from { opacity: 0; transform: translateY(10px) scale(0.96); }
+  to   { opacity: 1; transform: translateY(0) scale(1); }
+}

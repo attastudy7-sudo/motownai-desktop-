@@ -19,11 +19,14 @@ pub fn run() {
         .setup(|app| {
             let data_dir = app.path().app_data_dir()?;
             let secret = motown_core::random_secret();
+            // The site's CSS, JS, fonts and images, shipped inside the installer.
+            let bundle_dir = app.path().resource_dir().ok().map(|d| d.join("static")).filter(|d| d.is_dir());
             let cfg = motown_core::Config {
                 upstream: motown_core::Config::upstream_from_env(),
                 data_dir,
                 port: 0,
                 secret: Some(secret),
+                bundle_dir,
             };
             // The local server lives on Tauri's async runtime for the life of the app.
             let started = tauri::async_runtime::block_on(motown_core::start(cfg))?;

@@ -28,6 +28,10 @@ background, including new ones as soon as they're made.
   chat replies, Discover, payments) say "You're offline" instead.
 - Libraries the site loads from CDNs (icons, maths rendering) are saved too, so pages keep
   their icons offline.
+- **Ships with the site's files.** The installer carries the web app's CSS, JS, fonts and images
+  (`bundle/static`), so screens draw straight from the install. On a computer that has never
+  been online, the app opens on a welcome screen that asks to connect once to sign in, then
+  moves on by itself when the connection appears.
 - Signing out deletes the student's saved data from the computer.
 
 The window is [Tauri](https://tauri.app) (`src-tauri/`): about 10 MB, using the system's
@@ -50,6 +54,15 @@ MOTOWN_UPSTREAM=http://127.0.0.1:5000 cargo run -p motown-core --bin motown-loca
 ```
 
 `MOTOWN_UPSTREAM` also works with `npm run dev`. Tests: `cargo test --workspace`.
+
+## Updating the bundled site files
+
+```bash
+scripts/update-static.sh ../knowly     # copies knowly/app/static into bundle/static
+```
+
+Run it before a release when the website's CSS/JS has changed a lot. It only matters for fresh
+installs: while online, the app refreshes these files from motownai.com by itself.
 
 ## Build installers
 

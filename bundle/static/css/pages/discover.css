@@ -1,0 +1,227 @@
+/* ── Discover page ── */
+.disc-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: var(--spacing-lg);
+}
+
+.disc-header-text h1 {
+  font-size: var(--text-2xl);
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  color: var(--text-primary);
+  margin: 0 0 4px;
+}
+
+.disc-header-text p {
+  font-size: var(--text-sm);
+  color: var(--text-secondary);
+  margin: 0;
+}
+
+/* ── Type toggle (All / Packs / Quizzes) ── */
+/* ── Filter row (chips + toggle on same row) ── */
+.disc-filter-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 16px;
+}
+
+.disc-subjects {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  gap: 8px;
+  overflow-x: auto;
+  padding: 0 0 4px;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+}
+
+.disc-subjects::-webkit-scrollbar { display: none; }
+
+.disc-subject-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 7px 14px;
+  border-radius: 999px;
+  font-size: 0.82rem;
+  font-weight: 600;
+  border: 1px solid var(--border);
+  background: var(--bg-card);
+  color: var(--text-secondary);
+  text-decoration: none;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: background 0.15s, border-color 0.15s, color 0.15s;
+  flex-shrink: 0;
+  font-family: var(--font-body);
+}
+
+.disc-subject-chip:hover {
+  border-color: var(--primary);
+  color: var(--primary);
+}
+
+.disc-subject-chip:focus-visible {
+  outline: 2px solid var(--primary);
+  outline-offset: 2px;
+}
+
+.disc-subject-chip--active {
+  color: #fff;
+  border-color: var(--primary);
+  background: var(--primary);
+}
+
+.disc-subject-chip--active:hover {
+  opacity: 0.9;
+  color: #fff;
+}
+
+/* ── View toggle button ── */
+.view-toggle-btn {
+  flex-shrink: 0;
+  width: 34px;
+  height: 34px;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+  background: var(--bg-card);
+  color: var(--text-muted);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: background 0.15s, color 0.15s, border-color 0.15s;
+}
+
+.view-toggle-btn:hover {
+  background: var(--bg-hover);
+  color: var(--text-primary);
+  border-color: var(--border-hover);
+}
+
+@media (max-width: 640px) {
+  .disc-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.75rem;
+  }
+  .view-toggle-btn {
+    display: none;
+  }
+}
+
+@media (max-width: 640px) {
+  #discGrid {
+    display: flex !important;
+    flex-direction: column !important;
+    grid-template-columns: unset !important;
+    gap: 0 !important;
+    width: 100%;
+    box-sizing: border-box;
+  }
+  #discGrid .pack-card {
+    background: transparent !important;
+    border: none !important;
+    border-radius: 0 !important;
+    overflow: visible !important;
+    animation: none !important;
+  }
+  #discGrid .pack-card::before {
+    display: none !important;
+  }
+  #discGrid .pack-card .pack-cover,
+  #discGrid .pack-card .pack-desktop-title,
+  #discGrid .pack-card .pack-mastery-inline,
+  #discGrid .pack-card .pack-footer,
+  #discGrid .pack-card .pack-body,
+  #discGrid .pack-card .pack-header,
+  #discGrid .pack-card .pack-tile-overlay {
+    display: none !important;
+  }
+  #discGrid .pack-card .pack-mobile {
+    display: flex !important;
+  }
+  #discGrid .pack-card-real {
+    border-bottom: 0.5px solid var(--border);
+  }
+  #discGrid .pack-card-real:last-child {
+    border-bottom: none;
+  }
+}
+
+/* ── Filter-empty state (shown when active filter returns no results) ── */
+.disc-filter-empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 48px var(--spacing-md);
+  text-align: center;
+}
+
+.disc-filter-empty .disc-empty-icon {
+  color: var(--text-muted);
+}
+
+.disc-filter-empty .disc-empty-title {
+  margin: 4px 0 0;
+  font-size: var(--text-base, 0.95rem);
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+.disc-filter-empty .disc-empty-body {
+  margin: 0;
+  color: var(--text-secondary);
+  font-size: var(--text-sm);
+  max-width: 320px;
+  line-height: 1.5;
+}
+
+/* ── Quizzes chip variant ── */
+.disc-subject-chip--type {
+  border-style: dashed;
+}
+
+/* ── Empty state ── */
+.disc-empty {
+  width: 100%;
+  min-height: 50vh;
+  padding: var(--spacing-xl) var(--spacing-md);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--spacing-sm);
+  text-align: center;
+  background: transparent;
+  border-radius: 14px;
+}
+
+.disc-empty-icon {
+  color: var(--text-muted);
+}
+
+.disc-empty-title {
+  margin: 4px 0 0;
+  font-size: var(--text-lg);
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+.disc-empty-body {
+  margin: 0;
+  color: var(--text-secondary);
+  font-size: var(--text-sm);
+  max-width: 360px;
+  line-height: 1.5;
+}
+
+

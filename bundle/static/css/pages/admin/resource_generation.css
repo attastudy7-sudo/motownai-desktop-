@@ -1,0 +1,200 @@
+/* ── Bulk generation — centered hero form ────────────────────────────────── */
+
+.adm-main {
+  gap: 1rem;
+}
+
+.rg-hero {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 1.25rem 1.5rem 1.35rem;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.rg-form {
+  display: grid;
+  gap: 1rem;
+}
+
+.rg-field {
+  display: grid;
+  gap: .45rem;
+}
+
+.rg-field .adm-form-label {
+  margin-bottom: 0;
+}
+
+/* ── Topic source segmented control ───────────────────────────────────────── */
+.rg-segment {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: .25rem;
+  padding: .3rem;
+  background: var(--bg-secondary);
+  border: 1px solid var(--border);
+  border-radius: 11px;
+}
+
+.rg-segment-opt {
+  position: relative;
+  display: flex;
+  align-items: baseline;
+  justify-content: center;
+  gap: .35rem;
+  padding: .5rem .75rem;
+  border-radius: 8px;
+  cursor: pointer;
+  color: var(--text-muted);
+  transition: background 160ms ease-out, color 160ms ease-out;
+  user-select: none;
+}
+
+.rg-segment-opt input {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.rg-segment-opt span {
+  font-size: .82rem;
+  font-weight: 700;
+}
+
+.rg-segment-opt small {
+  font-size: .68rem;
+}
+
+.rg-segment-opt:has(input:checked) {
+  background: var(--bg-card);
+  color: var(--text-primary);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, .12);
+  border: 1px solid var(--border);
+  margin: -1px;
+}
+
+.rg-segment-opt:has(input:focus-visible) {
+  outline: 2px solid var(--primary);
+  outline-offset: 1px;
+}
+
+/* Manual textarea: shown only when the Manual segment is selected */
+.rg-manual-only { display: none; }
+.rg-form:has(.rg-segment input[value="manual"]:checked) .rg-manual-only { display: grid; }
+.rg-form:has(.rg-segment input[value="manual"]:checked) .rg-auto-only { display: none; }
+
+/* ── Pack contents note ───────────────────────────────────────────────────── */
+.rg-note {
+  display: flex;
+  align-items: center;
+  gap: .5rem;
+  padding: .5rem .75rem;
+  border: 1px dashed var(--border);
+  border-radius: var(--radius-md);
+  background: var(--bg-secondary);
+  color: var(--text-muted);
+  font-size: .76rem;
+}
+
+.rg-note i {
+  color: var(--primary);
+  font-size: .9rem;
+  flex-shrink: 0;
+}
+
+/* ── Actions ──────────────────────────────────────────────────────────────── */
+.rg-actions {
+  display: flex;
+  gap: .6rem;
+  flex-wrap: wrap;
+}
+
+.rg-actions .adm-btn--primary {
+  width: 100%;
+  justify-content: center;
+  padding: .62rem 1rem;
+  font-size: .85rem;
+  transition: background .15s, color .15s, border-color .15s, transform 160ms ease-out;
+}
+
+.rg-actions .adm-btn--primary:active {
+  transform: scale(0.97);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .rg-segment-opt:not(:has(input:checked)):hover {
+    color: var(--text-primary);
+    background: var(--bg-hover);
+  }
+}
+
+/* ── Recent jobs ──────────────────────────────────────────────────────────── */
+.rg-recent {
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.rg-jobs-list {
+  display: grid;
+  gap: .45rem;
+}
+
+.rg-recent .adm-card-title {
+  margin-bottom: .75rem;
+}
+
+.rg-job {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: .75rem;
+  padding: .5rem .75rem;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: var(--bg-secondary);
+}
+
+.rg-job-main {
+  display: grid;
+  gap: .15rem;
+  min-width: 0;
+}
+
+.rg-job-main strong {
+  font-size: .8rem;
+  color: var(--text-primary);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.rg-job-sub {
+  font-size: .7rem;
+  color: var(--text-muted);
+}
+
+/* ── Generated pack delete actions ────────────────────────────────────────── */
+.rg-job-actions {
+  display: flex;
+  align-items: center;
+  gap: .45rem;
+  flex-shrink: 0;
+}
+
+.rg-job-actions .adm-btn {
+  padding: .38rem .6rem;
+  font-size: .72rem;
+}
+
+@media (max-width: 600px) {
+  .rg-hero { padding: 1rem; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .rg-segment-opt,
+  .rg-actions .adm-btn--primary {
+    transition: none;
+  }
+}

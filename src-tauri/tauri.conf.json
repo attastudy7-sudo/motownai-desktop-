@@ -14,7 +14,14 @@
   },
   "bundle": {
     "active": true,
-    "targets": ["nsis", "msi", "dmg", "app", "deb", "appimage"],
+    "targets": [
+      "nsis",
+      "msi",
+      "dmg",
+      "app",
+      "deb",
+      "appimage"
+    ],
     "publisher": "Motown AI",
     "category": "Education",
     "shortDescription": "Study packs, saved on your computer",
@@ -27,8 +34,15 @@
       "icons/icon.ico"
     ],
     "windows": {
-      "nsis": { "installMode": "currentUser" },
-      "webviewInstallMode": { "type": "downloadBootstrapper" }
+      "nsis": {
+        "installMode": "currentUser"
+      },
+      "webviewInstallMode": {
+        "type": "downloadBootstrapper"
+      }
+    },
+    "resources": {
+      "../bundle/static/": "static/"
     }
   }
 }

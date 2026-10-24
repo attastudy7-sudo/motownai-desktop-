@@ -24,6 +24,7 @@ use crate::App;
 const INJECT_JS: &str = include_str!("../assets/inject.js");
 const INJECT_CSS: &str = include_str!("../assets/inject.css");
 const OFFLINE_HTML: &str = include_str!("../assets/offline.html");
+const WELCOME_HTML: &str = include_str!("../assets/welcome.html");
 const GATE_COOKIE: &str = "motown_desktop";
 const MAX_BODY: usize = 64 * 1024 * 1024;
 
@@ -250,6 +251,17 @@ async fn get(app: Arc<App>, req: Request, pq: String) -> Response {
             }
             return from_saved(saved, false);
         }
+        // Not saved yet: use the copy that came with the installer, and save the server's
+        // current one in the background.
+        if let Some(r) = bundled(&app, &path) {
+            if app.is_online() {
+                let (app, pq) = (app.clone(), pq.clone());
+                tokio::spawn(async move {
+                    let _ = fetch_and_save(&app, &pq).await;
+                });
+            }
+            return r;
+        }
     }
 
     let upstream = app.http.request(req.method().clone(), app.upstream_url(&pq));
@@ -356,12 +368,20 @@ fn offline_get(app: &App, key: &str, wants_html: bool) -> Response {
     if let Some(saved) = app.store.get(key) {
         return from_saved(saved, true);
     }
+    if is_static(key.trim_start_matches("GET ")) {
+        if let Some(r) = bundled(app, key.trim_start_matches("GET ")) {
+            return r;
+        }
+    }
     if wants_html {
+        // Never signed in on this computer (nothing saved yet): the welcome screen that asks
+        // to connect once. Otherwise: "this page isn't saved yet".
+        let page = if app.store.has("GET /dashboard") { OFFLINE_HTML } else { WELCOME_HTML };
         return Response::builder()
             .status(StatusCode::OK)
             .header(header::CONTENT_TYPE, "text/html; charset=utf-8")
             .header("x-motown-offline", "1")
-            .body(Body::from(maybe_inject("text/html", Bytes::from_static(OFFLINE_HTML.as_bytes()))))
+            .body(Body::from(maybe_inject("text/html", Bytes::from_static(page.as_bytes()))))
             .unwrap();
     }
     offline_json("This isn't saved on this computer yet. Connect to the internet to load it.")
@@ -375,6 +395,47 @@ fn offline_json(msg: &str) -> Response {
         .into_response();
     r.headers_mut().insert("x-motown-offline", HeaderValue::from_static("1"));
     r
+}
+
+/// A static file from the installer's copy of the site (`bundle/static`).
+fn bundled(app: &App, path_and_query: &str) -> Option<Response> {
+    let dir = app.bundle_dir.as_ref()?;
+    let path = path_and_query.split('?').next()?;
+    let rel = path.strip_prefix("/static/")?;
+    let rel = percent_decode(rel);
+    // Stay inside the bundle folder.
+    if rel.split('/').any(|seg| seg == ".." || seg.is_empty()) || rel.contains('\\') {
+        return None;
+    }
+    let file = dir.join(&rel);
+    let body = std::fs::read(&file).ok()?;
+    Some(([(header::CONTENT_TYPE, mime_for(&rel))], body).into_response())
+}
+
+fn percent_decode(s: &str) -> String {
+    percent_encoding::percent_decode_str(s).decode_utf8_lossy().into_owned()
+}
+
+fn mime_for(path: &str) -> &'static str {
+    let ext = path.rsplit('.').next().unwrap_or("").to_ascii_lowercase();
+    match ext.as_str() {
+        "css" => "text/css; charset=utf-8",
+        "js" | "mjs" => "application/javascript; charset=utf-8",
+        "json" => "application/json",
+        "html" => "text/html; charset=utf-8",
+        "svg" => "image/svg+xml",
+        "png" => "image/png",
+        "jpg" | "jpeg" => "image/jpeg",
+        "gif" => "image/gif",
+        "webp" => "image/webp",
+        "ico" => "image/x-icon",
+        "woff2" => "font/woff2",
+        "woff" => "font/woff",
+        "ttf" => "font/ttf",
+        "mp3" => "audio/mpeg",
+        "wasm" => "application/wasm",
+        _ => "application/octet-stream",
+    }
 }
 
 fn from_saved(saved: Saved, offline: bool) -> Response {
@@ -705,6 +766,13 @@ mod tests {
         assert!(s.contains("inject.js\"></script></head>"));
         let frag = maybe_inject("text/html", Bytes::from_static(b"<div>row</div>"));
         assert_eq!(&frag[..], b"<div>row</div>");
+    }
+
+    #[test]
+    fn decodes_bundled_paths() {
+        assert_eq!(percent_decode("images/ChatGPT%20Image.png"), "images/ChatGPT Image.png");
+        assert_eq!(percent_decode("css/style.css"), "css/style.css");
+        assert_eq!(mime_for("fonts/a.woff2"), "font/woff2");
     }
 
     #[test]

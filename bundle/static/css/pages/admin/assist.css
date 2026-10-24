@@ -1,0 +1,37 @@
+/* Ask Moto — admin AI helper FAB + panel */
+.moto-fab {
+    position: fixed; right: 20px; bottom: 20px; z-index: 60;
+    width: 56px; height: 56px; border-radius: 50%; border: none; cursor: pointer;
+    background: var(--primary, #2563eb); color: #fff; font-size: 24px;
+    display: flex; align-items: center; justify-content: center;
+    box-shadow: 0 8px 24px rgba(0,0,0,.28);
+}
+.moto-fab:hover { filter: brightness(1.08); }
+.moto-panel {
+    position: fixed; right: 20px; bottom: 88px; z-index: 60;
+    width: 360px; max-width: calc(100vw - 40px); height: 460px; max-height: calc(100vh - 120px);
+    display: flex; flex-direction: column; overflow: hidden;
+    background: var(--bg, #fff); border: 1.5px solid var(--border, #e5e7eb);
+    border-radius: 16px; box-shadow: 0 16px 48px rgba(0,0,0,.3);
+}
+.moto-panel[hidden] { display: none; }
+.moto-panel-head {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 10px 14px; font-weight: 700; font-size: .9rem;
+    background: var(--primary, #2563eb); color: #fff;
+}
+.moto-x { background: none; border: none; color: #fff; cursor: pointer; font-size: 1rem; }
+.moto-msgs { flex: 1; overflow-y: auto; padding: 12px; display: flex; flex-direction: column; gap: 8px; }
+.moto-msg { max-width: 88%; padding: 8px 12px; border-radius: 12px; font-size: .83rem; line-height: 1.5; white-space: pre-wrap; }
+.moto-msg--user { align-self: flex-end; background: var(--primary, #2563eb); color: #fff; }
+.moto-msg--moto { align-self: flex-start; background: var(--bg-hover, #f1f5f9); color: var(--text-primary, #111); }
+.moto-insert { margin-top: 8px; }
+.moto-chips { display: flex; gap: 6px; padding: 0 12px 8px; }
+.moto-chips button {
+    flex: 1; font-size: .72rem; font-weight: 600; padding: 6px 4px; border-radius: 999px;
+    border: 1.5px solid var(--border, #e5e7eb); background: none; cursor: pointer;
+    color: var(--text-secondary, #555);
+}
+.moto-chips button:hover { border-color: var(--primary, #2563eb); color: var(--primary, #2563eb); }
+.moto-form { display: flex; gap: 8px; padding: 10px 12px; border-top: 1px solid var(--border, #e5e7eb); }
+.moto-form input { flex: 1; }

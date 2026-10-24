@@ -1,0 +1,269 @@
+/* ─────────────────────────────────────────────────────────────────────────
+   Folder tracker components — creation picker + study-room "pick a folder"
+   prompt. Uses the app token system (--bg-*, --border, --text-*, --primary)
+   so it works identically over the dashboard and the study room in both
+   light and dark modes.
+   ───────────────────────────────────────────────────────────────────────── */
+
+/* Save-to-folder widget inside create overlays / the upload tab / study room.
+   One bordered shell: a "Save to" kicker + dropdown, which swaps in place to
+   a text input (+ back button) when "+ New folder…" is chosen. */
+.db-folder-picker {
+  margin-top: 14px;
+}
+
+.db-folder-picker__control {
+  display: flex;
+  align-items: stretch;
+  background: var(--bg-hover, rgba(128, 128, 128, 0.08));
+  border: 1.5px solid var(--border);
+  border-radius: 10px;
+  overflow: hidden;
+  transition: border-color 160ms ease, box-shadow 160ms ease;
+}
+
+.db-folder-picker__control:focus-within {
+  border-color: var(--text-secondary);
+  box-shadow: 0 0 0 3px rgba(var(--text-secondary-rgb), 0.15);
+}
+
+.db-folder-picker__kicker {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  flex-shrink: 0;
+  padding: 0 12px 0 13px;
+  border-right: 1px solid var(--border);
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  color: var(--text-muted);
+}
+
+.db-folder-picker__kicker svg {
+  flex-shrink: 0;
+  color: var(--text-secondary);
+  opacity: 0.9;
+}
+
+.db-folder-picker__select {
+  flex: 1 1 auto;
+  min-width: 0;
+  appearance: none;
+  -webkit-appearance: none;
+  border: 0;
+  background-color: transparent;
+  padding: 12px 34px 12px 12px;
+  font-size: 0.9rem;
+  color: var(--text-primary);
+  font-family: var(--font-body, inherit);
+  outline: none;
+  cursor: pointer;
+  background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%23a1a6b3' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 12px center;
+}
+
+.db-folder-picker__select option,
+.db-folder-picker__select optgroup {
+  background-color: var(--bg-card, #181a22);
+  color: var(--text-primary);
+}
+
+.db-folder-picker__select option:checked {
+  background-color: var(--bg-hover, rgba(128, 128, 128, 0.12));
+}
+
+.db-folder-picker__input {
+  display: none;
+  flex: 1 1 auto;
+  min-width: 0;
+  border: 0;
+  background-color: transparent;
+  padding: 11px 12px;
+  font-size: 0.9rem;
+  color: var(--text-primary);
+  font-family: var(--font-body, inherit);
+  outline: none;
+  animation: db-fp-reveal 180ms ease;
+}
+
+.db-folder-picker__back {
+  display: none;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 40px;
+  border: 0;
+  border-left: 1px solid var(--border);
+  background: transparent;
+  color: var(--text-muted);
+  cursor: pointer;
+  transition: color 120ms ease;
+}
+
+.db-folder-picker__back:hover {
+  color: var(--text-primary);
+  background: rgba(128, 128, 128, 0.08);
+}
+
+/* Creation state — input + back swap in, kicker + select drop out */
+.db-folder-picker--new .db-folder-picker__kicker,
+.db-folder-picker--new .db-folder-picker__select {
+  display: none;
+}
+
+.db-folder-picker--new .db-folder-picker__input,
+.db-folder-picker--new .db-folder-picker__back {
+  display: flex;
+}
+
+.db-folder-picker__select:focus-visible,
+.db-folder-picker__input:focus-visible {
+  outline: none;
+}
+
+@keyframes db-fp-reveal {
+  from { opacity: 0; transform: translateY(-3px); }
+  to   { opacity: 1; transform: none; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .db-folder-picker__input { animation: none; }
+}
+
+[data-theme="light"] .db-folder-picker__select {
+  background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%235b6270' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E");
+}
+
+.db-folder-picker__error {
+  font-size: 0.78rem;
+  color: #ef4444;
+  min-height: 1.1em;
+  margin: 6px 0 0;
+}
+
+/* Study-room "Pick a folder" prompts reuse the dashboard picker widget as a
+   compact dropdown instead of a button list. */
+.sr-folder-prompt .db-folder-picker { margin: 0 0 6px; }
+
+/* ─── Study-room "Pick a folder" prompt ─────────────────────────────────── */
+
+.sr-folder-prompt {
+  position: fixed;
+  inset: 0;
+  z-index: 2000;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  font-family: var(--font-body, inherit);
+}
+
+.sr-folder-prompt.is-open {
+  display: flex;
+}
+
+.sr-folder-prompt__backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(8, 10, 18, 0.55);
+  animation: sr-fp-fade 180ms ease;
+}
+
+.sr-folder-prompt__panel {
+  position: relative;
+  width: 100%;
+  max-width: 420px;
+  background: var(--bg-card, #181a22);
+  border: 1px solid var(--border);
+  border-radius: 18px;
+  padding: 22px;
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.35);
+  animation: sr-fp-pop 200ms cubic-bezier(0.2, 0.8, 0.3, 1);
+}
+
+.sr-folder-prompt__title {
+  font-family: var(--font-display, inherit);
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin: 0 0 4px;
+  line-height: 1.3;
+}
+
+.sr-folder-prompt__pack {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  margin: 0 0 14px;
+  line-height: 1.4;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.sr-folder-prompt__save {
+  height: 42px;
+  padding: 0 16px;
+  border-radius: 10px;
+  border: 1px solid var(--primary, #7c6cfa);
+  background: var(--primary, #7c6cfa);
+  color: #fff;
+  font-size: 0.88rem;
+  font-weight: 600;
+  font-family: var(--font-body, inherit);
+  cursor: pointer;
+  transition: opacity 120ms ease;
+}
+
+.sr-folder-prompt__save:disabled {
+  opacity: 0.55;
+  cursor: default;
+}
+
+.sr-folder-prompt__actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 4px;
+}
+
+.sr-folder-prompt__later {
+  height: 42px;
+  padding: 0 14px;
+  border: none;
+  background: transparent;
+  color: var(--text-muted);
+  font-size: 0.85rem;
+  font-family: var(--font-body, inherit);
+  cursor: pointer;
+  border-radius: 10px;
+}
+
+.sr-folder-prompt__later:hover {
+  background: var(--bg-hover, rgba(128, 128, 128, 0.1));
+  color: var(--text-primary);
+}
+
+.sr-folder-prompt__error {
+  font-size: 0.78rem;
+  color: #ef4444;
+  min-height: 1.1em;
+  margin: 6px 0 0;
+}
+
+@keyframes sr-fp-fade {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+@keyframes sr-fp-pop {
+  from { opacity: 0; transform: translateY(10px) scale(0.98); }
+  to   { opacity: 1; transform: none; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .sr-folder-prompt,
+  .sr-folder-prompt__panel { animation: none; }
+}

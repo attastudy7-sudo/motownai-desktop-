@@ -59,7 +59,8 @@
   }
 
   function render(s) {
-    if (!document.body) return;
+    // The first-run welcome screen explains being offline itself.
+    if (!document.body || document.body.hasAttribute('data-mdk-welcome')) return;
     if (!strip) strip = el('mdk-strip', '');
     if (!chip) chip = el('mdk-saving', '<span class="mdk-text"></span><span class="mdk-bar"><span class="mdk-fill"></span></span>');
 

@@ -2380,6 +2380,7 @@ dependencies = [
  "cookie_store",
  "futures-util",
  "open",
+ "percent-encoding",
  "rand 0.9.5",
  "regex",
  "reqwest",

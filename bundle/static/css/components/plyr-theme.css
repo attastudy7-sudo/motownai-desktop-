@@ -1,0 +1,20 @@
+:root {
+    --plyr-color-main: var(--primary);
+    --plyr-font-family: var(--font-body);
+    --plyr-control-radius: var(--radius-sm);
+    --plyr-range-thumb-background: var(--primary);
+    --plyr-range-fill-background: var(--primary);
+    --plyr-video-background: #000;
+    --plyr-tooltip-background: var(--bg-card);
+    --plyr-tooltip-color: var(--text-primary);
+    --plyr-tooltip-border-radius: var(--radius-sm);
+    --plyr-badge-background: var(--primary);
+}
+.plyr--video {
+    border-radius: var(--radius-md);
+    overflow: hidden;
+}
+[data-theme="dark"] {
+    --plyr-color-main: var(--primary);
+    --plyr-video-background: #000;
+}

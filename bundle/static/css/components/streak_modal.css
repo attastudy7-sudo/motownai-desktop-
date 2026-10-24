@@ -1,0 +1,250 @@
+/* ─────────────────────────────────────────────────────────────
+   STREAK CELEBRATION MODAL (dashboard)
+   Drawn with the existing celebration-overlay pattern + app tokens.
+   Theme-scoped vars live on .streak-overlay so the global palette
+   stays intact (dark default, light/data-theme override).
+───────────────────────────────────────────────────────────── */
+.streak-overlay {
+    /* scoped theme vars — dark default */
+    --sk-bg-elevated:   #1c1c1c;
+    --sk-border-strong: rgba(255, 255, 255, 0.12);
+    --sk-text-muted:    rgba(240, 237, 232, 0.62);
+    --sk-text-faint:    rgba(240, 237, 232, 0.4);
+    --sk-gold:          #f5c542;
+    --sk-gold-check:    #0d0d0d;
+    --sk-gold-ring:     rgba(245, 197, 66, 0.45);
+    --sk-gold-glow:     rgba(245, 197, 66, 0.3);
+    --sk-gold-soft:     rgba(245, 197, 66, 0.25);
+    --sk-primary-hover: #8d7ffb;
+
+    position: fixed;
+    inset: 0;
+    z-index: calc(var(--z-overlay, 2147483000) - 20);
+    background: rgba(8, 8, 12, 0.48);
+    backdrop-filter: blur(24px) saturate(180%);
+    -webkit-backdrop-filter: blur(24px) saturate(180%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.4s cubic-bezier(0.16, 1, 0.3, 1), visibility 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.streak-overlay.show { opacity: 1; visibility: visible; }
+
+[data-theme="light"] .streak-overlay {
+    --sk-bg-elevated:   #f1efea;
+    --sk-border-strong: rgba(0, 0, 0, 0.14);
+    --sk-text-muted:    rgba(26, 26, 26, 0.62);
+    --sk-text-faint:    rgba(26, 26, 26, 0.4);
+    --sk-gold:          #b8860b;
+    --sk-gold-check:    #ffffff;
+    --sk-gold-ring:     rgba(184, 134, 11, 0.35);
+    --sk-gold-glow:     rgba(184, 134, 11, 0.25);
+    --sk-gold-soft:     rgba(184, 134, 11, 0.2);
+    --sk-primary-hover: #4a3dc4;
+}
+
+.streak-card {
+    position: relative;
+    max-width: 400px;
+    width: 100%;
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: 36px 32px 30px;
+    text-align: center;
+    box-shadow: 0 24px 80px rgba(0, 0, 0, 0.55), 0 0 0 1px var(--primary-soft);
+    transform: scale(0.9) translateY(20px);
+    transition: transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+.streak-overlay.show .streak-card { transform: scale(1) translateY(0); }
+
+.streak-close {
+    position: absolute;
+    top: 14px;
+    right: 14px;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    border: 1px solid var(--border);
+    background: transparent;
+    color: var(--sk-text-faint);
+    font-size: 1rem;
+    line-height: 1;
+    cursor: pointer;
+    transition: color 0.15s, border-color 0.15s, background 0.15s;
+}
+.streak-close:hover { color: var(--text-primary); border-color: var(--sk-border-strong); background: var(--sk-bg-elevated); }
+
+.streak-lottie-wrap {
+    position: relative;
+    width: 180px;
+    height: 180px;
+    margin: 0 auto 6px;
+}
+.streak-lottie { width: 100%; height: 100%; }
+
+.streak-title {
+    font-family: var(--font-display);
+    font-size: 2rem;
+    font-weight: 700;
+    letter-spacing: -0.03em;
+    color: var(--text-primary);
+    margin-bottom: 8px;
+}
+.streak-title .count { color: var(--primary); }
+.streak-sub {
+    font-size: 0.94rem;
+    line-height: 1.5;
+    color: var(--text-secondary);
+    margin-bottom: 24px;
+}
+
+.streak-days {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: flex-start;
+    gap: 6px 8px;
+    margin-bottom: 24px;
+}
+.streak-day {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+    width: 42px;
+}
+.streak-day-label {
+    font-size: 0.66rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    color: var(--sk-text-faint);
+}
+.streak-day-dot {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1.5px solid var(--sk-border-strong);
+    background: transparent;
+    color: transparent;
+    font-size: 0.85rem;
+    font-weight: 800;
+    animation: dayPop 0.45s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+}
+.streak-day.active .streak-day-dot {
+    border-color: var(--primary);
+    background: var(--primary);
+    color: #fff;
+    box-shadow: 0 4px 14px var(--primary-glow);
+}
+.streak-day.today .streak-day-dot {
+    border-color: var(--sk-gold);
+    background: var(--sk-gold);
+    color: var(--sk-gold-check);
+    box-shadow: 0 0 0 2px var(--bg-card), 0 0 0 4px var(--sk-gold-ring), 0 4px 14px var(--sk-gold-glow);
+    animation: dayPop 0.45s cubic-bezier(0.34, 1.56, 0.64, 1) both,
+               todayFill 0.55s cubic-bezier(0.34, 1.56, 0.64, 1) 0.25s both;
+}
+.streak-day.today .streak-day-label { color: var(--sk-gold); }
+.streak-day-num {
+    font-size: 0.64rem;
+    color: var(--sk-text-faint);
+    font-weight: 600;
+}
+@keyframes dayPop {
+    0% { transform: scale(0); opacity: 0; }
+    60% { transform: scale(1.1); opacity: 1; }
+    100% { transform: scale(1); }
+}
+@keyframes todayFill {
+    0% { background: transparent; border-color: var(--sk-border-strong); color: transparent; box-shadow: none; }
+    45% { background: var(--sk-gold-soft); }
+    100% { background: var(--sk-gold); border-color: var(--sk-gold); color: var(--sk-gold-check); box-shadow: 0 0 0 2px var(--bg-card), 0 0 0 4px var(--sk-gold-ring), 0 4px 14px var(--sk-gold-glow); }
+}
+
+.streak-actions { display: flex; flex-direction: column; gap: 10px; }
+.streak-btn-primary {
+    background: var(--primary);
+    color: #fff;
+    border: none;
+    padding: 14px;
+    border-radius: var(--radius-md);
+    font-family: var(--font-body);
+    font-size: 0.95rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: background 0.15s, transform 0.15s;
+}
+.streak-btn-primary:hover { background: var(--sk-primary-hover); transform: translateY(-1px); }
+.streak-btn-secondary {
+    background: transparent;
+    color: var(--sk-text-faint);
+    border: none;
+    padding: 8px;
+    font-family: var(--font-body);
+    font-size: 0.85rem;
+    font-weight: 600;
+    cursor: pointer;
+}
+.streak-btn-secondary:hover { color: var(--text-primary); }
+
+/* ── Mobile sizing ────────────────────────────────────────────
+   Fluid day-circles guarantee all 6 fit in one row at any width
+   (fixed 42px circles would wrap 5+1 on narrow phones). Trimmed
+   card/Lottie keep the modal on-screen; overlay scrolls if needed. */
+@media (max-width: 480px) {
+    .streak-overlay {
+        padding: 14px;
+        overflow-y: auto;
+    }
+    .streak-card {
+        padding: 28px 22px 24px;
+    }
+    .streak-lottie-wrap {
+        width: 140px;
+        height: 140px;
+        margin-bottom: 2px;
+    }
+    .streak-title {
+        font-size: 1.6rem;
+    }
+    .streak-sub {
+        font-size: 0.9rem;
+        margin-bottom: 18px;
+    }
+    .streak-days {
+        gap: 6px;
+        margin-bottom: 18px;
+    }
+    .streak-day {
+        width: calc((100% - 30px) / 6); /* 6 items, 5 gaps of 6px */
+        gap: 3px;
+    }
+    .streak-day-dot {
+        width: 32px;
+        height: 32px;
+    }
+    .streak-btn-primary {
+        padding: 13px;
+    }
+}
+
+@media (max-width: 480px) and (max-height: 660px) {
+    .streak-lottie-wrap {
+        width: 112px;
+        height: 112px;
+    }
+    .streak-title {
+        font-size: 1.45rem;
+    }
+    .streak-sub {
+        margin-bottom: 14px;
+    }
+}

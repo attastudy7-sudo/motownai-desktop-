@@ -1,0 +1,114 @@
+/* ── Terms of Service ─────────────────────────────────────────────
+   Uses the app's design tokens via style.css. Self-contained layout.
+   ─────────────────────────────────────────────────────────────────*/
+
+.tos-page-header {
+  padding: 7rem 1.25rem 0;
+  max-width: 860px;
+  margin: 0 auto;
+}
+.tos-page-title {
+  font-family: var(--font-display, 'Space Grotesk', system-ui, sans-serif);
+  font-size: clamp(2.2rem, 5vw, 3.2rem);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: var(--text-primary);
+  margin-bottom: 0.5rem;
+}
+.tos-page-meta {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  margin-bottom: 1.5rem;
+}
+.tos-rule {
+  border: none;
+  border-top: 1px solid var(--border);
+  margin: 0 0 2.5rem;
+}
+
+.tos-prose {
+  max-width: 860px;
+  margin: 0 auto;
+  padding: 0 1.25rem 5rem;
+}
+
+.tos-prose h1 {
+  font-family: var(--font-display, 'Space Grotesk', system-ui, sans-serif);
+  font-size: 1.6rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin: 2.5rem 0 0.75rem;
+  letter-spacing: -0.015em;
+  padding-top: 2rem;
+  border-top: 1px solid var(--border);
+}
+.tos-prose h1:first-child {
+  border-top: none;
+  padding-top: 0;
+}
+.tos-prose h2 {
+  font-family: var(--font-display, 'Space Grotesk', system-ui, sans-serif);
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: var(--primary);
+  margin: 2rem 0 0.6rem;
+  letter-spacing: -0.01em;
+}
+.tos-prose p {
+  font-size: 0.925rem;
+  color: var(--text-secondary);
+  line-height: 1.78;
+  margin-bottom: 1rem;
+}
+.tos-prose strong {
+  color: var(--text-primary);
+  font-weight: 600;
+}
+.tos-prose ul, .tos-prose ol {
+  padding-left: 1.5rem;
+  margin: 0.75rem 0 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+.tos-prose ul { list-style: disc; }
+.tos-prose ol { list-style: decimal; }
+.tos-prose li {
+  font-size: 0.925rem;
+  color: var(--text-secondary);
+  line-height: 1.7;
+}
+.tos-prose li strong {
+  color: var(--text-primary);
+}
+.tos-prose a {
+  color: var(--primary);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+.tos-prose a:hover {
+  opacity: 0.8;
+}
+
+.tos-footer {
+  border-top: 1px solid var(--border);
+  padding: 2rem 1.25rem;
+  text-align: center;
+}
+.tos-footer p {
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+  margin-bottom: 0.4rem;
+}
+.tos-footer strong {
+  color: var(--text-primary);
+}
+.tos-footer-meta {
+  font-size: 0.78rem;
+  color: var(--text-muted);
+}
+
+@media (max-width: 640px) {
+  .tos-page-header { padding: 5rem 1rem 0; }
+  .tos-prose { padding: 0 1rem 4rem; }
+}

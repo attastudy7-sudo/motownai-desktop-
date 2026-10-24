@@ -1,0 +1,144 @@
+
+/* ── Dashboard-specific Mantis styles ─────────────────────────────── */
+
+/* Table user cell */
+.m-tbl-user {
+  display: flex;
+  align-items: center;
+  gap: .6rem;
+}
+.m-tbl-avatar {
+  width: 30px; height: 30px;
+  border-radius: 50%;
+  object-fit: cover;
+  flex-shrink: 0;
+  border: 2px solid var(--border);
+}
+.m-tbl-name {
+  font-weight: 600;
+  font-size: .84rem;
+  color: var(--text-primary);
+  white-space: nowrap;
+}
+.m-tbl-date {
+  font-size: .78rem;
+  color: var(--text-muted);
+  white-space: nowrap;
+}
+.m-tbl-rt {
+  text-align: right;
+  white-space: nowrap;
+}
+.m-tbl-empty {
+  padding: 1.5rem 1rem;
+  text-align: center;
+  color: var(--text-muted);
+  font-size: .84rem;
+}
+.m-action-link {
+  font-size: .75rem;
+  font-weight: 700;
+  color: var(--primary);
+  text-decoration: none;
+  padding: .25rem .55rem;
+  border-radius: 6px;
+  background: color-mix(in srgb, var(--primary) 8%, transparent);
+  transition: background .12s;
+}
+.m-action-link:hover {
+  background: color-mix(in srgb, var(--primary) 18%, transparent);
+}
+
+/* ── Recent Online Users: fits ~8 rows, scrollable; modern transparent scrollbar ── */
+.m-tbl-wrap--online {
+  overflow-y: auto;
+  max-height: 29.5rem; /* ≈ 8 user rows + header */
+  overscroll-behavior: contain;
+  scrollbar-width: thin;
+  scrollbar-color: var(--border) transparent;
+}
+.m-tbl-wrap--online::-webkit-scrollbar { width: 6px; }
+.m-tbl-wrap--online::-webkit-scrollbar-track { background: transparent; }
+.m-tbl-wrap--online::-webkit-scrollbar-thumb {
+  background: var(--border);
+  border-radius: 99px;
+}
+.m-tbl-wrap--online::-webkit-scrollbar-thumb:hover {
+  background: var(--border-hover);
+}
+.m-tbl-wrap--online thead th {
+  position: sticky;
+  top: 0;
+  z-index: 1;
+  background: var(--bg-card);
+}
+
+/* ── Status pills ─────────────────────────────────────────────────── */
+.m-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: .25rem;
+  padding: .15rem .5rem;
+  border-radius: 99px;
+  font-size: .68rem;
+  font-weight: 700;
+  white-space: nowrap;
+}
+.m-pill--premium {
+  background: rgba(139,92,246,.1);
+  color: #7c3aed;
+}
+.m-pill--starter {
+  background: rgba(245,158,11,.1);
+  color: #d97706;
+}
+.m-pill--free {
+  background: var(--bg-hover);
+  color: var(--text-muted);
+  border: 1px solid var(--border);
+}
+.m-pill--curated {
+  background: rgba(16,185,129,.1);
+  color: #059669;
+}
+.m-pill--user {
+  background: color-mix(in srgb, var(--primary) 8%, transparent);
+  color: var(--primary);
+}
+.m-pill--active {
+  background: rgba(16,185,129,.1);
+  color: #059669;
+}
+.m-pill--expired {
+  background: rgba(239,68,68,.08);
+  color: #ef4444;
+}
+
+/* ── Small screen tweaks ──────────────────────────────────────────── */
+@media (max-width: 600px) {
+  .m-tbl thead th,
+  .m-tbl tbody td {
+    padding: .55rem .7rem;
+    font-size: .78rem;
+  }
+  .m-tbl-avatar { width: 26px; height: 26px; }
+  .m-section-title { font-size: .82rem; }
+}
+
+/* Override old dash-* classes from previous CSS — keep for backward compat */
+.dash-stats-grid,
+.dash-stats-secondary,
+.dash-card-head,
+.dash-list,
+.dash-row,
+.dash-row-avatar,
+.dash-row-icon,
+.dash-row-body,
+.dash-row-name,
+.dash-row-sub,
+.dash-status,
+.dash-empty,
+.dash-see-all,
+.adm-single-col {
+  display: none;
+}

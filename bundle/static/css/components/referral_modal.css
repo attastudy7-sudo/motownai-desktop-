@@ -1,0 +1,201 @@
+/* referral_modal.css — Referral offer bottom-sheet
+   Mirrors the credits/quota modal calm language (.cqm / .qqm). */
+.rqm {
+  position: fixed;
+  inset: 0;
+  z-index: calc(var(--z-overlay, 2147483000) + 2);
+  display: none;
+  align-items: flex-end;
+  justify-content: center;
+}
+.rqm.rqm--open {
+  display: flex;
+}
+.rqm-bg {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.42);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+}
+.rqm-sheet {
+  position: relative;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg) var(--radius-lg) 0 0;
+  padding: var(--spacing-lg);
+  padding-top: var(--spacing-md);
+  padding-bottom: calc(var(--spacing-lg) + var(--safe-bottom));
+  width: 100%;
+  max-width: 480px;
+  text-align: center;
+}
+.rqm.rqm--open .rqm-sheet {
+  animation: rqmSheetUp 0.28s cubic-bezier(0.16, 1, 0.3, 1);
+}
+@keyframes rqmSheetUp {
+  from { transform: translateY(24px); opacity: 0; }
+  to   { transform: translateY(0);    opacity: 1; }
+}
+.rqm-handle {
+  width: 40px;
+  height: 4px;
+  background: var(--border);
+  border-radius: var(--radius-pill);
+  margin: 0 auto var(--spacing-md);
+}
+.rqm-close {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  background: transparent;
+  color: var(--text-muted);
+  cursor: pointer;
+  border-radius: var(--radius-sm);
+  transition: background var(--transition-fast), color var(--transition-fast);
+}
+.rqm-close:hover {
+  background: var(--bg-hover);
+  color: var(--text-secondary);
+}
+.rqm-close:focus-visible {
+  outline: 2px solid var(--primary);
+  outline-offset: 2px;
+}
+.rqm-icon {
+  width: 52px;
+  height: 52px;
+  margin: 0 auto var(--spacing-sm);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--radius-lg);
+  background: var(--accent-dim);
+  color: var(--primary);
+}
+.rqm-title {
+  font-family: var(--font-display);
+  font-size: var(--text-h4);
+  font-weight: var(--weight-bold);
+  color: var(--text-primary);
+  margin-bottom: var(--spacing-sm);
+}
+.rqm-text {
+  font-size: var(--text-sm);
+  line-height: 1.5;
+  color: var(--text-secondary);
+  margin-bottom: var(--spacing-md);
+}
+.rqm-tiers {
+  list-style: none;
+  margin: 0 0 var(--spacing-md);
+  padding: 0;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+}
+.rqm-tier {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.65rem var(--spacing-md);
+  font-size: var(--text-sm);
+}
+.rqm-tier + .rqm-tier {
+  border-top: 1px solid var(--border);
+}
+.rqm-tier-label {
+  color: var(--text-secondary);
+}
+.rqm-tier-num {
+  font-family: var(--font-display);
+  font-weight: var(--weight-bold);
+  color: var(--primary);
+  font-variant-numeric: tabular-nums;
+}
+.rqm-sub {
+  font-size: var(--text-sm);
+  color: var(--text-muted);
+  margin-bottom: var(--spacing-md);
+}
+.rqm-total {
+  font-weight: var(--weight-bold);
+  color: var(--primary);
+  font-variant-numeric: tabular-nums;
+}
+.rqm-cta {
+  width: 100%;
+  padding: 0.8rem;
+  border-radius: var(--radius-md);
+  background: linear-gradient(135deg, var(--primary) 0%, #a78bfa 100%);
+  color: #fff;
+  border: none;
+  font-size: var(--text-sm);
+  font-weight: var(--weight-bold);
+  font-family: var(--font-display);
+  cursor: pointer;
+  transition: opacity var(--transition-fast), transform var(--transition-fast);
+}
+.rqm-cta:hover {
+  opacity: 0.92;
+}
+.rqm-cta:focus-visible {
+  outline: 2px solid var(--primary);
+  outline-offset: 2px;
+}
+.rqm-later {
+  margin-top: var(--spacing-sm);
+  padding: 0.5rem;
+  border: none;
+  background: transparent;
+  color: var(--text-muted);
+  font-size: var(--text-sm);
+  font-family: var(--font-body);
+  cursor: pointer;
+  transition: color var(--transition-fast);
+}
+.rqm-later:hover {
+  color: var(--text-secondary);
+}
+.rqm-later:focus-visible {
+  outline: 2px solid var(--primary);
+  outline-offset: 2px;
+  border-radius: var(--radius-sm);
+}
+
+/* Desktop */
+@media (min-width: 769px) {
+  .rqm {
+    align-items: center;
+    padding: 1rem;
+  }
+  .rqm-sheet {
+    border-radius: var(--radius-lg);
+    max-width: 380px;
+    padding-bottom: var(--spacing-lg);
+    box-shadow: var(--shadow-modal);
+  }
+  .rqm-handle {
+    display: none;
+  }
+  .rqm.rqm--open .rqm-sheet {
+    animation: rqmCenterIn 0.22s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+}
+@keyframes rqmCenterIn {
+  from { transform: translateY(10px) scale(0.98); opacity: 0; }
+  to   { transform: translateY(0)    scale(1);    opacity: 1; }
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  .rqm.rqm--open .rqm-sheet {
+    animation: none;
+  }
+}

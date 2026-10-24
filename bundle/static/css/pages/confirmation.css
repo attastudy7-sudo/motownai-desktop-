@@ -1,0 +1,117 @@
+/* ── Confirmation Page ────────────────────────────────────────────── */
+
+.confirm-main {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 6.5rem 1.25rem 4rem;
+}
+
+.confirm-card {
+  background: var(--bg-card, rgba(22,22,22,0.95));
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg, 20px);
+  padding: 3rem 2.5rem;
+  max-width: 440px;
+  width: 100%;
+  text-align: center;
+}
+
+.confirm-icon {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  background: rgba(34,197,94,0.12);
+  border: 2px solid rgba(34,197,94,0.3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 1.5rem;
+  color: #22c55e;
+  animation: confirmPop 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.confirm-icon svg {
+  animation: confirmCheck 0.4s 0.2s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+@keyframes confirmPop {
+  0% { transform: scale(0.5); opacity: 0; }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+@keyframes confirmCheck {
+  0% { transform: scale(0.8); opacity: 0; }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+.confirm-title {
+  font-family: var(--font-display, 'Space Grotesk', system-ui, sans-serif);
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin: 0 0 0.5rem;
+}
+
+.confirm-message {
+  font-size: 0.95rem;
+  color: var(--text-muted);
+  line-height: 1.6;
+  margin: 0 0 2rem;
+}
+
+.confirm-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.confirm-btn {
+  display: block;
+  padding: 0.85rem 1.5rem;
+  border-radius: var(--radius-md, 12px);
+  font-family: var(--font-display, 'Space Grotesk', system-ui, sans-serif);
+  font-size: 0.9rem;
+  font-weight: 600;
+  text-decoration: none;
+  text-align: center;
+  transition: opacity 0.15s, background 0.15s, color 0.15s;
+}
+
+.confirm-btn:hover {
+  opacity: 0.88;
+}
+
+.confirm-btn--primary {
+  background: linear-gradient(135deg, var(--primary) 0%, #a78bfa 100%);
+  color: #fff;
+}
+
+.confirm-btn--ghost {
+  background: transparent;
+  border: 1px solid var(--border);
+  color: var(--text-muted);
+}
+
+.confirm-btn--ghost:hover {
+  border-color: var(--text-muted);
+  color: var(--text-primary);
+  opacity: 1;
+}
+
+/* Cancelled state uses orange instead of green */
+.confirm-icon--cancelled {
+  background: rgba(251,146,60,0.12);
+  border-color: rgba(251,146,60,0.3);
+  color: #fb923c;
+}
+
+/* ── Light Theme ── */
+[data-theme="light"] .confirm-card { background: #ffffff; }
+
+/* ── Responsive ── */
+@media (max-width: 480px) {
+  .confirm-card { padding: 2rem 1.5rem; }
+  .confirm-title { font-size: 1.25rem; }
+}
